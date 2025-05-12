@@ -3,11 +3,11 @@ import EditUserBreadcrumb from '@/components/breadcrumbs/edit-user-breadcrumb';
 import prisma from '@/lib/prisma';
 import { User } from '@/types';
 
-type UserProps = {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
+interface UserProps {
+    readonly id: string;
+    readonly name: string;
+    readonly email: string;
+    readonly role: string;
 }
 
 export const metadata = { title: 'Edit' };

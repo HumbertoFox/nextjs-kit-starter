@@ -19,7 +19,7 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string): Promise<void> {
     const expTimestamp = Math.floor(Date.now() / 1000) + 15 * 60;
     const expDate = new Date(expTimestamp * 1000);
 
@@ -38,7 +38,7 @@ export async function createSession(userId: string) {
     })
 }
 
-export async function verifySession() {
+export async function verifySession(): Promise<{ isAuth: boolean; userId: string; }> {
     const cookie = (await cookies()).get('sessionAuth')?.value;
     const session = await decrypt(cookie);
     if (!session?.userId) redirect('/login');

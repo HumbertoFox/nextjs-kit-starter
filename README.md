@@ -20,12 +20,12 @@ New user registration uses **Next.js 15 (App Router)**, **Shadcn/ui** visual lay
 
 ### 📁 Files Involved
 
-| Path                          | Description                                              |
-|-------------------------------|----------------------------------------------------------|
-| `app/register/page.tsx`       | Registration page that renders the component `Register`  |
-| `app/api/actions/register.ts` | Server action that processes and stores the registration |
-| `lib/zod.ts`                  | Form validation scheme with Zod                          |
-| `lib/prisma.ts`               | Prisma Client instance for database persistence          |
+| Path                                    | Description                                              |
+|-----------------------------------------|----------------------------------------------------------|
+| `app/dashboard/admins/registerpage.tsx` | Registration page that renders the component `Register`  |
+| `app/api/actions/register.ts`           | Server action that processes and stores the registration |
+| `lib/zod.ts`                            | Form validation scheme with Zod                          |
+| `lib/prisma.ts`                         | Prisma Client instance for database persistence          |
 
 ---
 
@@ -84,7 +84,7 @@ New user registration uses **Next.js 15 (App Router)**, **Shadcn/ui** visual lay
 
 ## 🔐 User Login
 
-The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth.js**, authentication by credentials and reactive forms with `useActionState`.
+The login functionality of this app uses **Next.js 15 (App Router)**, **jose.js**, **bcrypt-ts**, authentication by credentials and reactive forms with `useActionState`.
 
 ---
 
@@ -95,7 +95,6 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth
 | `app/login/page.tsx`         | Login page with asynchronous loading            |
 | `app/login/login-client.tsx` | Client-side component with form and state logic |
 | `app/api/actions/login.ts`   | Server action that authenticates the user       |
-| `auth.ts`                    | Central configuration of NextAuth.js            |
 
 ---
 
@@ -116,20 +115,16 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth
 
 ---
 
-#### 3. Settings NextAuth (`auth.ts`)
-- Authentication via `CredentialsProvider`
+#### 3. Settings Nextjs (`auth.ts`)
+- Authentication via `DataBase`
 - Password verification with `bcrypt-ts`
 - Sessions managed via JWT
 - User role = 'ADMIN' or 'USER'
-- Session time 5 min idle disconnects
+- Session time 15 min idle disconnects
 
 ```bach
 
-    session: {
-        strategy: 'jwt',
-        maxAge: 5 * 60,
-        updateAge: 0
-    },
+    const expTimestamp = Math.floor(Date.now() / 1000) + 15 * 60;
 
 ```
 
@@ -150,7 +145,6 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth
 
 ### ✅ Additional Resources
 
-- **Remember me**: checkbox available (still without active persistence)
 - **Show/hide password**: with icons (`lucide-react`)
 - **Temporary messages**: success and visible errors in UI
 - **Automatic redirection if user is already logged in**
@@ -159,7 +153,7 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth
 
 ### 🛡️ Security
 
-- Authentication via JWT (`strategy: 'jwt'`)
+- Authentication via JWT (`'jwt'`)
 - Passwords protected with `bcrypt-ts`
 - Tokens expired removed from database automatically
 - No automatic redirection by NextAuth, avoiding silent failures
@@ -168,7 +162,7 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **NextAuth
 
 ## ⚙️ Account Settings
 
-The User Settings section offers three main functionalities: **profile editing**, **password change** e **appearance customization**. Tall are protected by active session (`next-auth`) and follow modern standards with form validation, visual transitions and interactive feedback.
+The User Settings section offers three main functionalities: **profile editing**, **password change** e **appearance customization**. Tall are protected by active session (`nextjs`) and follow modern standards with form validation, visual transitions and interactive feedback.
 
 ---
 
