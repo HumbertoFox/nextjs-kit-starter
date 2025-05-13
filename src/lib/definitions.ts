@@ -1,5 +1,23 @@
 import { z, object, string } from 'zod';
 
+export const createAdminSchema = object({
+    name: string()
+        .min(1, 'Name is required'),
+    email: string()
+        .email('Invalid email address'),
+    password: string()
+        .min(8, 'Password must be at least 8 characters long'),
+    role: z.enum(['ADMIN'], {
+        errorMap: () => ({ message: 'Role must be either ADMIN' }),
+    }),
+    password_confirmation: string()
+        .min(1, 'Please confirm your password')
+})
+    .refine((data) => data.password === data.password_confirmation, {
+        message: "Passwords don't match",
+        path: ['password_confirmation']
+    });
+
 export function getSignUpUpdateSchema(formData: FormData) {
     const isEdit = Boolean(formData.get('id'));
 
@@ -84,13 +102,26 @@ export const passwordForgotSchema = object({
         .email("Invalid email"),
 });
 
+export type FormStateCreateAdmin =
+    | {
+        errors?: {
+            name?: string[];
+            email?: string[];
+            role?: string[];
+            password?: string[];
+            password_confirmation?: string[];
+        }
+        message?: boolean;
+        warning?: string;
+    } | undefined;
+
 export type FormStateCreateUpdateAdminUser =
     | {
         errors?: {
             name?: string[];
             email?: string[];
-            password?: string[];
             role?: string[];
+            password?: string[];
             password_confirmation?: string[];
         }
         message?: boolean;

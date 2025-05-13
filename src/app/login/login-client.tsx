@@ -33,7 +33,6 @@ export default function Login() {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
