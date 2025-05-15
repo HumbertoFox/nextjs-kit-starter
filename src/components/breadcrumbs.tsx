@@ -7,9 +7,7 @@ import { Fragment } from 'react';
 
 export function Breadcrumbs() {
     const { breadcrumbs } = useBreadcrumbs();
-
     if (breadcrumbs.length === 0) return null;
-
     return (
         <Breadcrumb>
             <BreadcrumbList>

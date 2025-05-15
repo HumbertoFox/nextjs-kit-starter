@@ -1,0 +1,219 @@
+{
+    "Welcome": {
+        "Dashboard": "Painel",
+        "Login": "Entrar",
+        "Register": "Cadastrar-se",
+        "EditText": "Comece editando",
+        "SaveAndSee": "Salve e veja suas mudanças instantaneamente.",
+        "DeployNow": "Implantar agora",
+        "ReadDocs": "Leia nossa documentação",
+        "Learn": "Aprender",
+        "Examples": "Exemplos",
+        "NextLink": "Ir para nextjs.org →"
+    },
+    "RegisterAdmin": {
+        "Title": "Criar uma conta",
+        "Description": "Digite seu e-mail e senha abaixo para fazer login",
+        "NameLabel": "Nome",
+        "NamePlaceholder": "Nome completo",
+        "EmailLabel": "Endereço de email",
+        "EmailPlaceholder": "email@exemplo.com",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "ConfirmPasswordLabel": "Confirme sua senha",
+        "ConfirmPasswordPlaceholder": "Confirme sua senha",
+        "RoleLabel": "Tipo de conta",
+        "RoleTitle": "Selecione o tipo de conta",
+        "RolePlaceholder": "Tipo de conta",
+        "RoleItem": "Administrador(a)",
+        "Submit": "Criar uma conta"
+    },
+    "Login": {
+        "Title": "Entre na sua conta",
+        "Description": "Digite seu e-mail e senha abaixo para fazer login",
+        "EmailLabel": "Endereço de email",
+        "EmailPlaceholder": "email@exemplo.com",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "Forgot": "Esqueceu sua senha?",
+        "Submit": "Entrar"
+    },
+    "ForgotPassword": {
+        "Title": "Esqueceu sua senha",
+        "Description": "Digite seu e-mail para receber um link para redefinir sua senha",
+        "EmailLabel": "Endereço de email",
+        "EmailPlaceholder": "email@exemplo.com",
+        "Submit": "Link para redefinição de senha de e-mail",
+        "LinkSpan": "Ou, volte para",
+        "LinkLogin": "Conecte-se"
+    },
+    "ResetPasswordClient": {
+        "Title": "Redefinir senha",
+        "Description": "Por favor, digite sua nova senha abaixo",
+        "EmailLabel": "E-mail",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "PasswordConfirmLabel": "Confirme sua senha",
+        "PasswordConfirmPlaceholder": "Confirme sua senha",
+        "Submit": "Redefinir senha"
+    },
+    "ConfirmPassword": {
+        "Title": "Confirme sua senha",
+        "Description": "Esta é uma área segura do aplicativo. Confirme sua senha antes de continuar.",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "Submit": "Confirme sua senha"
+    },
+    "VerifyEmail": {
+        "Title": "Verificar e-mail",
+        "Description": "Verifique seu endereço de e-mail clicando no link que acabamos de enviar para você.",
+        "TextParagraf": "Um novo link de verificação foi enviado para o endereço de e-mail que você forneceu durante o registro.",
+        "Submit": "Reenviar e-mail de verificação",
+        "LinkLogin": "Conecte-se"
+    },
+    "AppSidebar": {
+        "Dashboard": "Painel",
+        "Administrators": "Administradores",
+        "Register": "Cadastrar",
+        "Users": "Usuários",
+        "Repository": "Repositório",
+        "Developer": "Desenvolvedor"
+    },
+    "NavMain": {
+        "Platform": "Plataforma"
+    },
+    "Admins": {
+        "Index": "Nº",
+        "IdAdmin": "Cód.",
+        "Name": "Nome",
+        "Email": "E-mail",
+        "Actions": "Ações",
+        "NotListAdmin": "Não há outros administradores",
+        "LinkTitle": "Atualizar",
+        "AriaLabelIcon": "Atualizar",
+        "DialogButtonTitle": "Excluir",
+        "DialogButtonAreaLabel": "Excluir",
+        "DialogTitle": "você tem certeza?",
+        "DialogDescription": "Depois de confirmar, você não poderá reverter esta ação!",
+        "DialogButtonCancel": "Cancelar",
+        "DialogButtonSubmit": "Sim, Excluir!"
+    },
+    "Users": {
+        "Index": "Nº",
+        "IdUser": "Cód.",
+        "Name": "Nome",
+        "Email": "E-mail",
+        "Actions": "Ações",
+        "NotListUser": "Não há nenhum usuário registrado",
+        "LinkTitle": "Atualizar",
+        "AriaLabelIcon": "Atualizar",
+        "DialogButtonTitle": "Excluir",
+        "DialogButtonAreaLabel": "Excluir",
+        "DialogTitle": "você tem certeza?",
+        "DialogDescription": "Depois de confirmar, você não poderá reverter esta ação!",
+        "DialogButtonCancel": "Cancelar",
+        "DialogButtonSubmit": "Sim, Excluir!"
+    },
+    "RegisterUserPage": {
+        "ValueButton": "Cadastrar"
+    },
+    "Update": {
+        "ValueButton": "Atualizar"
+    },
+    "RegisterUserForm": {
+        "IdLabel": "Cód.",
+        "IdPlaceholder": "Cód.",
+        "NameLabel": "Nome",
+        "NamePlaceholder": "Nome completo",
+        "EmailLabel": "Endereço de email",
+        "EmailPlaceholder": "email@exemplo.com",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "RoleLabel": "Tipo de conta",
+        "RoleTitle": "Selecione o tipo de conta",
+        "RolePlaceholder": "Tipo de conta",
+        "RoleItemUser": "usuário",
+        "RoleItemAdmin": "Administrador"
+    },
+    "Language": {
+        "Title": "Configurações de linguagem",
+        "Description": "Atualize as configurações de linguagem da sua conta",
+        "TitleButtonEn": "Inglês",
+        "TitleButtonPt": "Português-BR"
+    },
+    "Breadcrumb": {
+        "Dashboard": "Painel",
+        "Profile": "Perfil",
+        "PasswordSettings": "Configurações de senha",
+        "AppearanceSettings": "Configurações de aparência",
+        "LanguageSettings": "Configurações de linguagem",
+        "Administrators": "Administradores",
+        "Register": "Cadastrar",
+        "Users": "Usuários",
+        "Update": "Atualizar",
+        "UpdateUser": "Atualizar usuário"
+    },
+    "ProfilePageClient": {
+        "Title": "Informações do perfil",
+        "Description": "Atualize seu nome e endereço de e-mail",
+        "NameLabel": "Nome",
+        "NamePlaceholder": "Nome completo",
+        "EmailLabel": "Endereço de email",
+        "EmailPlaceholder": "email@exemplo.com",
+        "TextParagrafPrimary": "Seu endereço de e-mail não foi verificado.",
+        "Submit": "Clique aqui para reenviar o e-mail de verificação.",
+        "TextParagrafSecond": "Um novo link de verificação foi enviado para seu endereço de e-mail.",
+        "ButtonSave": "Salvar",
+        "Saved": "Salvo"
+    },
+    "DeleteUser": {
+        "Title": "Excluir conta",
+        "Description": "Exclua sua conta e todos os seus recursos",
+        "Warning": "Aviso",
+        "WarningDescription": "Por favor, prossiga com cautela, isso não pode ser desfeito.",
+        "DialogButton": "Excluir conta",
+        "DialogTitle": "Tem certeza de que deseja excluir sua conta?",
+        "DialogDescription": "Após a exclusão da sua conta, todos os seus recursos e dados também serão excluídos permanentemente. Digite sua senha para confirmar que deseja excluir sua conta permanentemente.",
+        "PasswordLabel": "Senha",
+        "PasswordPlaceholder": "Senha",
+        "DialogButtonCancel": "Cancelar",
+        "DialogButtonSubmit": "Excluir conta"
+    },
+    "Password": {
+        "Title": "Atualizar senha",
+        "Description": "Certifique-se de que sua conta esteja usando uma senha longa e aleatória para permanecer segura",
+        "PasswordCurrentLabel": "Senha atual",
+        "PasswordCurrentPlaceholder": "Senha atual",
+        "PasswordNewLabel": "Nova Senha",
+        "PasswordNewPlaceholder": "Nova Senha",
+        "ConfirmPasswordLabel": "Confirme sua senha",
+        "ConfirmPasswordPlaceholder": "Confirme sua senha",
+        "Submit": "Salvar senha",
+        "Saved": "Salvo"
+    },
+    "Appearance": {
+        "Title": "Configurações de aparência",
+        "Description": "Atualize as configurações de aparência da sua conta"
+    },
+    "AppearanceToggleTab": {
+        "Light": "Luz",
+        "Dark": "Escura",
+        "System": "Sistema"
+    },
+    "SettingsLayout": {
+        "Title": "Configurações",
+        "Description": "Gerencie seu perfil e as configurações da conta",
+        "Profile": "Perfil",
+        "Password": "Senha",
+        "Appearance": "Aparência",
+        "Language": "Linguagem"
+    },
+    "UserMenuContent": {
+        "LinkSettings": "Configurações",
+        "Logout": "Sair"
+    },
+    "NotFound": {
+        "TextTitle": "Página não encontrada",
+        "TextParagraf": "Desculpe, não conseguimos encontrar a página que você está procurando."
+    }
+}

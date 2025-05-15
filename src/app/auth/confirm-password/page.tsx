@@ -9,8 +9,10 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
 import { resetPassword } from '@/app/api/auth/resetpassword';
+import { useTranslations } from 'next-intl';
 
 export default function ConfirmPassword() {
+    const t = useTranslations('ConfirmPassword');
     const [state, action, pending] = useActionState(resetPassword, undefined);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [data, setData] = useState<Required<{ password: string }>>({ password: '' });
@@ -19,29 +21,24 @@ export default function ConfirmPassword() {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-
-    const toggleShowPassword = () => setShowPassword(!showPassword);
+    const toggleShowPassword = () => setShowPassword(prev => !prev);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         startTransition(() => action(formData));
     };
     return (
-        <AuthLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
-        >
+        <AuthLayout title={t('Title')} description={t('Description')}>
             <form onSubmit={submit}>
                 <div className="space-y-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">{t('PasswordLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                placeholder="Password"
-                                autoComplete="current-password"
+                                placeholder={t('PasswordPlaceholder')}
                                 value={data.password}
                                 autoFocus
                                 onChange={handleChange}
@@ -58,9 +55,9 @@ export default function ConfirmPassword() {
                     </div>
 
                     <div className="flex items-center">
-                        <Button className="w-full" disabled={pending}>
+                        <Button type="submit" className="w-full" disabled={pending}>
                             {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Confirm password
+                            {t('Submit')}
                         </Button>
                     </div>
                 </div>

@@ -9,8 +9,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/components/layouts/auth-layout';
 import { forgotPassword } from '@/app/api/auth/forgotpassword';
+import { useTranslations } from 'next-intl';
 
 export default function ForgotPassword() {
+    const t = useTranslations('ForgotPassword');
     const [state, action, pending] = useActionState(forgotPassword, undefined);
     const [data, setData] = useState<Required<{ email: string }>>({ email: '' });
 
@@ -18,20 +20,19 @@ export default function ForgotPassword() {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         startTransition(() => action(formData));
     };
     return (
-        <AuthLayout title="Forgot password" description="Enter your email to receive a password reset link">
+        <AuthLayout title={t('Title')} description={t('Description')}>
             {state?.message && <div className="mb-4 text-center text-sm font-medium text-green-400">{state.message}</div>}
 
             <div className="space-y-6">
                 <form onSubmit={submit}>
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">{t('EmailLabel')}</Label>
                         <Input
                             id="email"
                             type="email"
@@ -40,7 +41,7 @@ export default function ForgotPassword() {
                             value={data.email}
                             autoFocus
                             onChange={handleChange}
-                            placeholder="email@example.com"
+                            placeholder={t('EmailPlaceholder')}
                         />
                         <InputError message={state?.errors?.email} />
                     </div>
@@ -48,14 +49,14 @@ export default function ForgotPassword() {
                     <div className="my-6 flex items-center justify-start">
                         <Button className="w-full" disabled={pending}>
                             {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Email password reset link
+                            {t('Submit')}
                         </Button>
                     </div>
                 </form>
 
                 <div className="text-muted-foreground space-x-1 text-center text-sm">
-                    <span>Or, return to</span>
-                    <TextLink href="/login">log in</TextLink>
+                    <span>{t('LinkSpan')}</span>
+                    <TextLink href="/login">{t('LinkLogin')}</TextLink>
                 </div>
             </div>
         </AuthLayout>

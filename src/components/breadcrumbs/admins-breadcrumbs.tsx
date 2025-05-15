@@ -2,16 +2,17 @@
 
 import { useEffect } from 'react';
 import { useBreadcrumbs } from '@/context/breadcrumb-context';
+import { useTranslations } from 'next-intl';
 
 export default function AdminsBreadcrumbs() {
     const { setBreadcrumbs } = useBreadcrumbs();
-
+    const tb = useTranslations('Breadcrumb');
     useEffect(() => {
         setBreadcrumbs([
-            { title: 'Dashboard', href: '/dashboard' },
-            { title: 'Administrators', href: '/dashboard/admins' },
+            { title: tb('Dashboard'), href: '/dashboard' },
+            { title: tb('Administrators'), href: '/dashboard/admins' },
         ]);
-    }, [setBreadcrumbs]);
+    }, [setBreadcrumbs, tb]);
 
     return null;
 }

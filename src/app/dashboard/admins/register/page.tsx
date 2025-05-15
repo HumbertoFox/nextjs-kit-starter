@@ -1,14 +1,16 @@
 import RegisterUserForm from '@/app/dashboard/admins/form-register-user';
 import RegisterUserBreadcrumb from '@/components/breadcrumbs/register-user-breadcrumb';
+import { getTranslations } from 'next-intl/server';
 
 export const metadata = { title: 'Register' };
 
-export default function RegisterUserPage() {
+export default async function RegisterUserPage() {
+    const t = await getTranslations('RegisterUserPage');
     return (
         <>
             <RegisterUserBreadcrumb />
             <div className="flex gap-4 rounded-xl p-4">
-                <RegisterUserForm valueButton="Register" />
+                <RegisterUserForm valueButton={t('ValueButton')} />
             </div>
         </>
     );

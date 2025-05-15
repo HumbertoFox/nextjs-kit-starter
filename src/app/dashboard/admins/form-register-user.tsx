@@ -10,6 +10,7 @@ import { Icon } from '@/components/ui/icon';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
 import { createUpdateAdminUser } from '@/app/api/actions/createupdateadminuser';
+import { useTranslations } from 'next-intl';
 
 type UserProps = {
     id: string;
@@ -25,11 +26,13 @@ type RegisterForm = UserProps & {
 
 type RegisterFormProps = {
     user?: UserProps;
+    isEdit?: boolean;
     valueButton?: string;
 }
 
-export default function RegisterUserForm({ user, valueButton }: RegisterFormProps) {
+export default function RegisterUserForm({ user, isEdit, valueButton }: RegisterFormProps) {
     const router = useRouter();
+    const t = useTranslations('RegisterUserForm');
     const [state, action, pending] = useActionState(createUpdateAdminUser, undefined);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false);
@@ -46,15 +49,13 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-
-    const toggleShowPassword = () => setShowPassword(!showPassword);
-    const toggleShowPasswordConfirm = () => setShowPasswordConfirm(!showPasswordConfirm);
+    const toggleShowPassword = () => setShowPassword(prev => !prev);
+    const toggleShowPasswordConfirm = () => setShowPasswordConfirm(prev => !prev);
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         startTransition(() => action(formData));
     };
-
     useEffect(() => {
         if (state?.message) {
             const { role } = data;
@@ -81,14 +82,14 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
     return (
         <form className="w-full max-w-96 flex flex-col gap-6" onSubmit={submit}>
             <div className="grid gap-6">
-                {valueButton === 'Edit' && (
+                {isEdit && (
                     <div className="grid gap-2">
-                        <Label htmlFor="id">ID</Label>
+                        <Label htmlFor="id">{t('IdLabel')}</Label>
                         <Input
                             id="id"
                             name="id"
                             type="text"
-                            required
+                            required={isEdit}
                             autoComplete="id"
                             value={data.id}
                             onChange={handleChange}
@@ -101,7 +102,7 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                 )}
 
                 <div className="grid gap-2">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">{t('NameLabel')}</Label>
                     <Input
                         id="name"
                         name="name"
@@ -113,13 +114,13 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                         value={data.name}
                         onChange={handleChange}
                         disabled={pending}
-                        placeholder="Full name"
+                        placeholder={t('NamePlaceholder')}
                     />
                     <InputError message={state?.errors?.name} />
                 </div>
 
                 <div className="grid gap-2">
-                    <Label htmlFor="email">Email address</Label>
+                    <Label htmlFor="email">{t('EmailLabel')}</Label>
                     <Input
                         id="email"
                         name="email"
@@ -130,13 +131,13 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                         value={data.email}
                         onChange={handleChange}
                         disabled={pending}
-                        placeholder="email@example.com"
+                        placeholder={t('EmailPlaceholder')}
                     />
                     <InputError message={state?.errors?.email} />
                 </div>
 
                 <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">{t('PasswordLabel')}</Label>
                     <div className="relative">
                         <Input
                             id="password"
@@ -144,11 +145,10 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                             type={showPassword ? "text" : "password"}
                             required={!data.id}
                             tabIndex={3}
-                            autoComplete="new-password"
                             value={data.password}
                             onChange={handleChange}
                             disabled={pending}
-                            placeholder="Password"
+                            placeholder={t('PasswordPlaceholder')}
                         />
                         <button
                             type="button"
@@ -170,7 +170,6 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                             type={showPasswordConfirm ? "text" : "password"}
                             required={!data.id}
                             tabIndex={4}
-                            autoComplete="new-password"
                             value={data.password_confirmation}
                             onChange={handleChange}
                             disabled={pending}
@@ -188,7 +187,7 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                 </div>
 
                 <div className="grid gap-2">
-                    <Label htmlFor="role">Tipo do Conta</Label>
+                    <Label htmlFor="role">{t('RoleLabel')}</Label>
                     <Select
                         required
                         value={data.role}
@@ -198,17 +197,17 @@ export default function RegisterUserForm({ user, valueButton }: RegisterFormProp
                         <SelectTrigger
                             id="role"
                             name="role"
-                            title="Selecionar tipo de Conta"
+                            title={t('RoleTitle')}
                             tabIndex={5}
                         >
-                            <SelectValue placeholder="Tipo de Conta" />
+                            <SelectValue placeholder={t('RolePlaceholder')} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="USER">
-                                User
+                                {t('RoleItemUser')}
                             </SelectItem>
                             <SelectItem value="ADMIN">
-                                Administrator
+                                {t('RoleItemAdmin')}
                             </SelectItem>
                         </SelectContent>
                     </Select>

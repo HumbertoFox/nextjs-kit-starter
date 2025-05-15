@@ -7,12 +7,14 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import prisma from '@/lib/prisma';
 import { UserPen, UserX } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 export const metadata = { title: 'Users' };
 
 export default async function Users() {
     const users = await prisma.user.findMany({ where: { role: 'USER', deletedAt: null } });
+    const t = await getTranslations('Users');
     return (
         <>
             <UsersBreadcrumb />
@@ -32,17 +34,17 @@ export default async function Users() {
                     <Table className="w-full text-center">
                         <TableHeader>
                             <TableRow className="cursor-default">
-                                <TableHead className="text-center">Nº</TableHead>
-                                <TableHead className="text-center">ID</TableHead>
-                                <TableHead className="text-center">Name</TableHead>
-                                <TableHead className="text-center">Email</TableHead>
-                                <TableHead className="text-center">Actions</TableHead>
+                                <TableHead className="text-center">{t('Index')}</TableHead>
+                                <TableHead className="text-center">{t('IdUser')}</TableHead>
+                                <TableHead className="text-center">{t('Name')}</TableHead>
+                                <TableHead className="text-center">{t('Email')}</TableHead>
+                                <TableHead className="text-center">{t('Actions')}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {users.length === 0 && (
                                 <TableRow className="text-red-600 cursor-default">
-                                    <TableCell colSpan={5}>There is no registered user</TableCell>
+                                    <TableCell colSpan={5}>{t('NotListUser')}</TableCell>
                                 </TableRow>
                             )}
                             {users.map((user, index) => (
@@ -55,12 +57,12 @@ export default async function Users() {
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell className="flex justify-evenly items-center my-1">
                                         <Link
-                                            href={`/dashboard/admins/${user.id}/edit`}
-                                            title={`Edit ${user.name}`}
+                                            href={`/dashboard/admins/${user.id}/update`}
+                                            title={`${t('LinkTitle')} ${user.name}`}
                                         >
                                             <Icon
                                                 iconNode={UserPen}
-                                                aria-label={`Edit ${user.name}`}
+                                                aria-label={`${t('AriaLabelIcon')} ${user.name}`}
                                                 className="size-6 text-yellow-600 hover:text-yellow-500 duration-300"
                                             />
                                         </Link>
@@ -69,26 +71,26 @@ export default async function Users() {
                                             <DialogTrigger asChild>
                                                 <button
                                                     type="button"
-                                                    title={`Exculir ${user.name}`}
+                                                    title={`${t('DialogButtonTitle')} ${user.name}`}
                                                 >
                                                     <Icon
                                                         iconNode={UserX}
-                                                        aria-label={`Excluir ${user.name}`}
+                                                        aria-label={`${t('DialogButtonAreaLabel')} ${user.name}`}
                                                         className="size-6 text-red-600 cursor-pointer hover:text-red-500 duration-300"
                                                     />
                                                 </button>
                                             </DialogTrigger>
                                             <DialogContent>
                                                 <DialogTitle>
-                                                    He is sure?
+                                                    {t('DialogTitle')}
                                                 </DialogTitle>
                                                 <DialogDescription>
-                                                    Once you confirm, you will not be able to reverse this action!
+                                                    {t('DialogDescription')}
                                                 </DialogDescription>
                                                 <DialogFooter>
                                                     <DialogClose asChild>
                                                         <Button type="button" variant="secondary">
-                                                            Cancel
+                                                            {t('DialogButtonCancel')}
                                                         </Button>
                                                     </DialogClose>
                                                     <form action={deleteUserById}>
@@ -97,7 +99,7 @@ export default async function Users() {
                                                             type="submit"
                                                             variant="destructive"
                                                         >
-                                                            Yes, Delete!
+                                                            {t('DialogButtonSubmit')}
                                                         </Button>
                                                     </form>
                                                 </DialogFooter>

@@ -7,28 +7,27 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/components/layouts/auth-layout';
 import { handleEmailVerification } from '@/app/api/auth/handleemailverification';
+import { useTranslations } from 'next-intl';
 
 export default function VerifyEmail() {
+    const t = useTranslations('VerifyEmail');
     const [state, action, pending] = useActionState(handleEmailVerification, undefined);
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         startTransition(() => action());
     };
-
     useEffect(() => {
         const alreadySent = sessionStorage.getItem('verification-email-sent');
-
         if (!alreadySent) {
             sessionStorage.setItem('verification-email-sent', 'true');
             startTransition(() => { action(); });
         };
     }, [action]);
     return (
-        <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
+        <AuthLayout title={t('Title')} description={t('Description')}>
             {state?.status === "verification-link-sent" && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address you provided during registration.
+                    <p>{t('TextParagraf')}</p>
                 </div>
             )}
 
@@ -39,11 +38,11 @@ export default function VerifyEmail() {
             <form onSubmit={submit} className="space-y-6 text-center">
                 <Button disabled={pending || state?.status === 'verification-email-sent' || state?.error !== ''} variant="secondary">
                     {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                    Resend verification email
+                    {t('Submit')}
                 </Button>
 
                 <TextLink href={!state?.status ? "/login" : "/login?status=email verified"} className="mx-auto block text-sm">
-                    Log in
+                    {t('LinkLogin')}
                 </TextLink>
             </form>
         </AuthLayout>

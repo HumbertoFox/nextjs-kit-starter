@@ -10,6 +10,7 @@ import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { createAdmin } from '@/app/api/actions/createadmin';
+import { useTranslations } from 'next-intl';
 
 type RegisterForm = {
     name: string;
@@ -20,6 +21,7 @@ type RegisterForm = {
 };
 
 export default function RegisterAdmin() {
+    const t = useTranslations('RegisterAdmin');
     const emailRef = useRef<HTMLInputElement>(null);
     const [state, action, pending] = useActionState(createAdmin, undefined);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -56,11 +58,11 @@ export default function RegisterAdmin() {
         };
     }, [state]);
     return (
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
+        <AuthLayout title={t('Title')} description={t('Description')}>
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">{t('NameLabel')}</Label>
                         <Input
                             id="name"
                             name="name"
@@ -72,13 +74,13 @@ export default function RegisterAdmin() {
                             value={data.name}
                             onChange={handleChange}
                             disabled={pending}
-                            placeholder="Full name"
+                            placeholder={t('NamePlaceholder')}
                         />
                         <InputError message={state?.errors?.name} className="mt-2" />
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">{t('EmailLabel')}</Label>
                         <Input
                             id="email"
                             name="email"
@@ -90,13 +92,13 @@ export default function RegisterAdmin() {
                             value={data.email}
                             onChange={handleChange}
                             disabled={pending}
-                            placeholder="email@example.com"
+                            placeholder={t('EmailPlaceholder')}
                         />
                         <InputError message={state?.errors?.email} />
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">{t('PasswordLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password"
@@ -108,7 +110,7 @@ export default function RegisterAdmin() {
                                 value={data.password}
                                 onChange={handleChange}
                                 disabled={pending}
-                                placeholder="Password"
+                                placeholder={t('PasswordPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -122,7 +124,7 @@ export default function RegisterAdmin() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                        <Label htmlFor="password_confirmation">{t('ConfirmPasswordLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password_confirmation"
@@ -134,7 +136,7 @@ export default function RegisterAdmin() {
                                 value={data.password_confirmation}
                                 onChange={handleChange}
                                 disabled={pending}
-                                placeholder="Confirm password"
+                                placeholder={t('ConfirmPasswordPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -148,7 +150,7 @@ export default function RegisterAdmin() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="role">Tipo do Conta</Label>
+                        <Label htmlFor="role">{t('RoleLabel')}</Label>
                         <Select
                             required
                             value={data.role}
@@ -158,14 +160,14 @@ export default function RegisterAdmin() {
                             <SelectTrigger
                                 id="role"
                                 name="role"
-                                title="Selecionar tipo de Conta"
+                                title={t('RoleTitle')}
                                 tabIndex={5}
                             >
-                                <SelectValue placeholder="Tipo de Conta" />
+                                <SelectValue placeholder={t('RolePlaceholder')} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="ADMIN">
-                                    Administrator
+                                    {t('roleItem')}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
@@ -176,7 +178,7 @@ export default function RegisterAdmin() {
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Create account
+                        {t('Submit')}
                     </Button>
                 </div>
             </form>

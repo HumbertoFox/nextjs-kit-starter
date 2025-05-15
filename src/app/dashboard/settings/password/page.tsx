@@ -11,10 +11,13 @@ import { Icon } from '@/components/ui/icon';
 import { Eye, EyeClosed } from 'lucide-react';
 import { updatePassword } from '@/app/api/actions/updatepassword';
 import { useBreadcrumbs } from '@/context/breadcrumb-context';
+import { useTranslations } from 'next-intl';
 
 export default function Password() {
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
+    const t = useTranslations('Password');
+    const tb = useTranslations('Breadcrumb');
     const { setBreadcrumbs } = useBreadcrumbs();
     const [showOldPassword, setShowOldPassword] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -42,21 +45,21 @@ export default function Password() {
 
     useEffect(() => {
         setBreadcrumbs([
-            { title: 'Dashboard', href: '/dashboard' },
-            { title: 'Password settings', href: '/dashboard/settings/password' }
+            { title: tb('Dashboard'), href: '/dashboard' },
+            { title: tb('PasswordSettings'), href: '/dashboard/settings/password' }
         ]);
-    }, [setBreadcrumbs]);
+    }, [setBreadcrumbs, tb]);
     useEffect(() => {
         if (state?.message) setrecentlySuccessful(true);
     }, [state]);
     return (
         <>
             <div className="space-y-6">
-                <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
+                <HeadingSmall title={t("Title")} description={t('Description')} />
 
                 <form onSubmit={submit} className="space-y-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="current_password">Current password</Label>
+                        <Label htmlFor="current_password">{t('PasswordCurrentLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="current_password"
@@ -68,7 +71,7 @@ export default function Password() {
                                 type={showOldPassword ? "text" : "password"}
                                 className="block w-full"
                                 autoComplete="current-password"
-                                placeholder="Current password"
+                                placeholder={t('PasswordCurrentPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -82,7 +85,7 @@ export default function Password() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">New password</Label>
+                        <Label htmlFor="password">{t('PasswordNewLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password"
@@ -94,7 +97,7 @@ export default function Password() {
                                 type={showPassword ? "text" : "password"}
                                 className="block w-full"
                                 autoComplete="new-password"
-                                placeholder="New password"
+                                placeholder={t('PasswordNewPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -108,7 +111,7 @@ export default function Password() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                        <Label htmlFor="password_confirmation">{t('ConfirmPasswordLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password_confirmation"
@@ -119,7 +122,7 @@ export default function Password() {
                                 type={showPasswordConfirm ? "text" : "password"}
                                 className="block w-full"
                                 autoComplete="new-password"
-                                placeholder="Confirm password"
+                                placeholder={t('ConfirmPasswordPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -133,7 +136,7 @@ export default function Password() {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <Button disabled={pending}>Save password</Button>
+                        <Button disabled={pending}>{t('Submit')}</Button>
 
                         <Transition
                             show={recentlySuccessful}
@@ -142,7 +145,7 @@ export default function Password() {
                             leave="transition ease-in-out"
                             leaveTo="opacity-0"
                         >
-                            <p className="text-sm text-neutral-600">Saved</p>
+                            <p className="text-sm text-neutral-600">{t('Saved')}</p>
                         </Transition>
                     </div>
                 </form>

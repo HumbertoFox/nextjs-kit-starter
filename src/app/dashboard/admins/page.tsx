@@ -9,6 +9,7 @@ import AdminsBreadcrumbs from '@/components/breadcrumbs/admins-breadcrumbs';
 import prisma from '@/lib/prisma';
 import { getUser } from '@/lib/dal';
 import { deleteUserById } from '@/app/api/actions/deleteadminuser';
+import { getTranslations } from 'next-intl/server';
 
 export const metadata = { title: 'Administrators' };
 
@@ -16,6 +17,7 @@ export default async function Admins() {
     const session = await getUser();
     const loggedAdmin = session?.id;
     const admins = await prisma.user.findMany({ where: { role: 'ADMIN', deletedAt: null } });
+    const t = await getTranslations('Admins');
     return (
         <>
             <AdminsBreadcrumbs />
@@ -35,17 +37,17 @@ export default async function Admins() {
                     <Table className="w-full text-center">
                         <TableHeader>
                             <TableRow className="cursor-default">
-                                <TableHead className="text-center">Nº</TableHead>
-                                <TableHead className="text-center">ID</TableHead>
-                                <TableHead className="text-center">Name</TableHead>
-                                <TableHead className="text-center">Email</TableHead>
-                                <TableHead className="text-center">Actions</TableHead>
+                                <TableHead className="text-center">{t('Index')}</TableHead>
+                                <TableHead className="text-center">{t('IdAdmin')}</TableHead>
+                                <TableHead className="text-center">{t('Name')}</TableHead>
+                                <TableHead className="text-center">{t('Email')}</TableHead>
+                                <TableHead className="text-center">{t('Actions')}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {admins.length === 0 && (
                                 <TableRow className="text-red-600 cursor-default">
-                                    <TableCell colSpan={5}>There are no other administrators</TableCell>
+                                    <TableCell colSpan={5}>{t('NotListAdmin')}</TableCell>
                                 </TableRow>
                             )}
                             {admins.map((admin, index) => (
@@ -57,10 +59,13 @@ export default async function Admins() {
                                     <TableCell>{admin.name}</TableCell>
                                     <TableCell>{admin.email}</TableCell>
                                     <TableCell className="flex justify-evenly items-center my-1">
-                                        <Link href={admin.id === loggedAdmin ? '/dashboard/settings/profile' : `/dashboard/admins/${admin.id}/edit`} title={`Editar ${admin.name}`}>
+                                        <Link
+                                            href={admin.id === loggedAdmin ? '/dashboard/settings/profile' : `/dashboard/admins/${admin.id}/update`}
+                                            title={`${t('LinkTitle')} ${admin.name}`}
+                                        >
                                             <Icon
                                                 iconNode={UserRoundPen}
-                                                aria-label={`Editar ${admin.name}`}
+                                                aria-label={`${t('AriaLabelIcon')} ${admin.name}`}
                                                 className="size-6 text-yellow-600 hover:text-yellow-500 duration-300"
                                             />
                                         </Link>
@@ -68,10 +73,10 @@ export default async function Admins() {
                                         <Dialog>
                                             <DialogTrigger asChild>
                                                 {admin.id !== loggedAdmin && (
-                                                    <button type="button" title={`Delete ${admin.name}`}>
+                                                    <button type="button" title={`${t('DialogButtonTitle')} ${admin.name}`}>
                                                         <Icon
                                                             iconNode={UserRoundX}
-                                                            aria-label={`Delete ${admin.name}`}
+                                                            aria-label={`${t('DialogButtonAreaLabel')} ${admin.name}`}
                                                             className="size-6 text-red-600 cursor-pointer hover:text-red-500 duration-300"
                                                         />
                                                     </button>
@@ -79,15 +84,15 @@ export default async function Admins() {
                                             </DialogTrigger>
                                             <DialogContent>
                                                 <DialogTitle>
-                                                    He is sure?
+                                                    {t('DialogTitle')}
                                                 </DialogTitle>
                                                 <DialogDescription>
-                                                    Once you confirm, you will not be able to reverse this action!
+                                                    {t('DialogDescription')}
                                                 </DialogDescription>
                                                 <DialogFooter>
                                                     <DialogClose asChild>
                                                         <Button type="button" variant="secondary">
-                                                            Cancel
+                                                            {t('DialogButtonCancel')}
                                                         </Button>
                                                     </DialogClose>
                                                     <form action={deleteUserById}>
@@ -96,7 +101,7 @@ export default async function Admins() {
                                                             type="submit"
                                                             variant="destructive"
                                                         >
-                                                            Yes, Delete!
+                                                            {t('DialogButtonSubmit')}
                                                         </Button>
                                                     </form>
                                                 </DialogFooter>

@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function HomeFooterComponent() {
+    const t = useTranslations('Welcome');
     const containerRef = useRef<HTMLDivElement>(null);
-
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.fromTo('.link-item', {
@@ -41,7 +42,7 @@ export default function HomeFooterComponent() {
                     width={16}
                     height={16}
                 />
-                Learn
+                {t('Learn')}
             </a>
             <a
                 className="link-item flex items-center gap-2 hover:underline hover:underline-offset-4 opacity-0"
@@ -56,7 +57,7 @@ export default function HomeFooterComponent() {
                     width={16}
                     height={16}
                 />
-                Examples
+                {t('Examples')}
             </a>
             <a
                 className="link-item flex items-center gap-2 hover:underline hover:underline-offset-4 opacity-0"
@@ -71,7 +72,7 @@ export default function HomeFooterComponent() {
                     width={16}
                     height={16}
                 />
-                Go to nextjs.org →
+                {t('NextLink')}
             </a>
         </footer>
     );

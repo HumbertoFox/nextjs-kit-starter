@@ -10,6 +10,7 @@ import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
 import { resetPassword } from '@/app/api/auth/resetpassword';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type ResetPasswordForm = {
     token: string;
@@ -20,6 +21,7 @@ type ResetPasswordForm = {
 
 export default function ResetPasswordClient() {
     const searchParams = useSearchParams();
+    const t = useTranslations('ResetPasswordClient');
     const [state, action, pending] = useActionState(resetPassword, undefined);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false);
@@ -34,17 +36,13 @@ export default function ResetPasswordClient() {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-
     const toggleShowPassword = () => setShowPassword(!showPassword);
     const toggleShowPasswordConfirm = () => setShowPasswordConfirm(!showPasswordConfirm);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         const formData = new FormData(e.currentTarget);
-
         startTransition(() => action(formData));
     };
-
     useEffect(() => {
         if (state?.message) {
             setData({
@@ -56,11 +54,11 @@ export default function ResetPasswordClient() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
     return (
-        <AuthLayout title="Reset password" description="Please enter your new password below">
+        <AuthLayout title={t('Title')} description={t('Description')}>
             <form onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email">{t('Email')}</Label>
                         <Input
                             id="email"
                             type="email"
@@ -76,19 +74,18 @@ export default function ResetPasswordClient() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">{t('PasswordLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password"
-                                type={showPassword ? "text" : "password"}
                                 name="password"
+                                type={showPassword ? "text" : "password"}
                                 tabIndex={2}
-                                autoComplete="new-password"
                                 value={data.password}
                                 className="block w-full"
                                 autoFocus
                                 onChange={handleChange}
-                                placeholder="Password"
+                                placeholder={t('PasswordPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -102,7 +99,7 @@ export default function ResetPasswordClient() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                        <Label htmlFor="password_confirmation">{t('PasswordConfirmLabel')}</Label>
                         <div className="relative">
                             <Input
                                 id="password_confirmation"
@@ -113,7 +110,7 @@ export default function ResetPasswordClient() {
                                 value={data.password_confirmation}
                                 className="block w-full"
                                 onChange={handleChange}
-                                placeholder="Confirm password"
+                                placeholder={t('PasswordConfirmPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -130,12 +127,14 @@ export default function ResetPasswordClient() {
 
                     <Button type="submit" className="mt-4 w-full" disabled={pending}>
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Reset password
+                        {t('Submit')}
                     </Button>
                 </div>
             </form>
 
-            {(state?.message || state?.warning) && <div className={`mb-4 text-center text-sm font-medium ${state.warning ? 'text-orange-400' : 'text-green-400'}`}>{state.message || state.warning}</div>}
+            {(state?.message || state?.warning) && (
+                <div className={`mb-4 text-center text-sm font-medium ${state.warning ? 'text-orange-400' : 'text-green-400'}`}>{state.message || state.warning}</div>
+            )}
         </AuthLayout>
     );
 }

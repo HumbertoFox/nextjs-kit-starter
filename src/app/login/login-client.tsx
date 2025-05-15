@@ -11,6 +11,7 @@ import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
 import { loginUser } from '@/app/api/actions/loginuser';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type LoginForm = {
     email: string;
@@ -19,6 +20,7 @@ type LoginForm = {
 
 export default function Login() {
     const searchParams = useSearchParams();
+    const t = useTranslations('Login');
     const [status, setStatus] = useState<string | boolean>(false);
     const canResetPassword = !status;
     const router = useRouter();
@@ -65,11 +67,11 @@ export default function Login() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
+        <AuthLayout title={t('Title')} description={t('Description')}>
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">{t('EmailLabel')}</Label>
                         <Input
                             id="email"
                             name="email"
@@ -81,20 +83,21 @@ export default function Login() {
                             autoComplete="email"
                             value={data.email}
                             onChange={handleChange}
-                            placeholder="email@example.com"
+                            placeholder={t('EmailPlaceholder')}
                         />
                         <InputError message={state?.errors?.email} />
                     </div>
 
                     <div className="grid gap-2">
                         <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('PasswordLabel')}</Label>
                             {canResetPassword && (
                                 <TextLink href="/auth/forgot-password" className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
+                                    {t('Forgot')}
                                 </TextLink>
                             )}
                         </div>
+                        
                         <div className="relative">
                             <Input
                                 id="password"
@@ -106,7 +109,7 @@ export default function Login() {
                                 autoComplete="current-password"
                                 value={data.password}
                                 onChange={handleChange}
-                                placeholder="Password"
+                                placeholder={t('PasswordPlaceholder')}
                             />
                             <button
                                 type="button"
@@ -121,7 +124,7 @@ export default function Login() {
 
                     <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={pending}>
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
+                        {t('Submit')}
                     </Button>
                 </div>
             </form>

@@ -5,6 +5,7 @@ import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type User } from '@/types';
 import { LogOut, Settings } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 interface UserMenuContentProps {
@@ -13,6 +14,7 @@ interface UserMenuContentProps {
 
 export function UserMenuContent({ user }: UserMenuContentProps) {
     const cleanup = useMobileNavigation();
+    const t = useTranslations('UserMenuContent');
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
@@ -25,7 +27,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 <DropdownMenuItem asChild>
                     <Link className="block w-full cursor-pointer" href="/dashboard/settings/profile" prefetch onClick={cleanup}>
                         <Settings className="mr-2" />
-                        Settings
+                        {t('LinkSettings')}
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -33,7 +35,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuItem asChild>
                 <Link className="block w-full cursor-pointer" href="/logout" onClick={cleanup}>
                     <LogOut className="mr-2 rotate-180" />
-                    Log out
+                    {t('Logout')}
                 </Link>
             </DropdownMenuItem>
         </>

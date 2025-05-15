@@ -2,11 +2,13 @@ import HomeFooterComponent from '@/components/home-footer';
 import HomeMainComponent from '@/components/home-main';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/session';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 export const metadata = { title: 'Welcome Create Next App' };
 
 export default async function Welcome() {
+  const t = await getTranslations('Welcome');
   const isUserAdmin = await prisma.user.findMany({ where: { role: 'ADMIN' } });
   const session = await getSession();
   return (
@@ -18,7 +20,7 @@ export default async function Welcome() {
               href="dashboard"
               className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
             >
-              Dashboard
+              {t('Dashboard')}
             </Link>
           ) : (
             isUserAdmin.length > 0 ? (
@@ -26,14 +28,14 @@ export default async function Welcome() {
                 href="/login"
                 className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
               >
-                Log in
+                {t('Login')}
               </Link>
             ) : (
               <Link
                 href="register"
                 className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
               >
-                Register
+                {t('Register')}
               </Link>
             ))}
         </nav>

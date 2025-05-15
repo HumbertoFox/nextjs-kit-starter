@@ -5,33 +5,23 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type PropsWithChildren } from 'react';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: '/dashboard/settings/profile',
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: '/dashboard/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: '/dashboard/settings/appearance',
-        icon: null,
-    },
-];
-
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const currentPath = usePathname();
+    const t = useTranslations('SettingsLayout');
+    const sidebarNavItems: NavItem[] = [
+        { title: t('Profile'), href: '/dashboard/settings/profile', icon: null },
+        { title: t('Password'), href: '/dashboard/settings/password', icon: null },
+        { title: t('Appearance'), href: '/dashboard/settings/appearance', icon: null },
+        { title: t('Language'), href: '/dashboard/settings/language', icon: null },
+    ];
     return (
         <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+            <Heading title={t("Title")} description={t('Description')} />
 
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">

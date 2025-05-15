@@ -12,6 +12,7 @@ import { updateUser } from '@/app/api/actions/updateuser';
 import { emailVerifiedChecked } from '@/app/api/actions/emailverified';
 import { useRouter } from 'next/navigation';
 import { useBreadcrumbs } from '@/context/breadcrumb-context';
+import { useTranslations } from 'next-intl';
 
 type ProfileForm = {
     name: string;
@@ -24,14 +25,13 @@ type Props = ProfileForm & {
 
 export default function ProfilePageClient({ name, email, mustVerifyEmail }: Props) {
     const router = useRouter();
+    const t = useTranslations('ProfilePageClient');
+    const tb = useTranslations('Breadcrumb');
     const { setBreadcrumbs } = useBreadcrumbs();
     const [state, action, pending] = useActionState(updateUser, undefined);
     const [status, setStatus] = useState<string | null>(null);
     const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false);
-    const [data, setData] = useState<ProfileForm>({
-        name: name ?? '',
-        email: email ?? ''
-    });
+    const [data, setData] = useState<ProfileForm>({ name: name ?? '', email: email ?? '' });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -52,10 +52,10 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
 
     useEffect(() => {
         setBreadcrumbs([
-            { title: 'Dashboard', href: '/dashboard' },
-            { title: 'Profile', href: '/dashboard/settings/profile' }
+            { title: tb('Dashboard'), href: '/dashboard' },
+            { title: tb('Profile'), href: '/dashboard/settings/profile' }
         ]);
-    }, [setBreadcrumbs]);
+    }, [setBreadcrumbs, tb]);
     useEffect(() => {
         if (state?.success) {
             setRecentlySuccessful(true);
@@ -67,11 +67,11 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
     return (
         <>
             <div className="space-y-6">
-                <HeadingSmall title="Profile information" description="Update your name and email address" />
+                <HeadingSmall title={t('Title')} description={t('Description')} />
 
                 <form onSubmit={submit} className="space-y-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">{t('NameLabel')}</Label>
                         <Input
                             id="name"
                             name="name"
@@ -80,13 +80,13 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                             onChange={handleChange}
                             required
                             autoComplete="name"
-                            placeholder="Full name"
+                            placeholder={t('NamePlaceholder')}
                         />
                         <InputError className="mt-2" message={state?.errors?.name} />
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">{t('EmailLabel')}</Label>
                         <Input
                             id="email"
                             name="email"
@@ -95,8 +95,8 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                             value={data.email ?? ""}
                             onChange={handleChange}
                             required
-                            autoComplete="username"
-                            placeholder="Email address"
+                            autoComplete="email"
+                            placeholder={t('EmailPlaceholder')}
                         />
                         <InputError className="mt-2" message={state?.errors?.email} />
                     </div>
@@ -104,26 +104,26 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                     {mustVerifyEmail && (
                         <div>
                             <p className="text-muted-foreground -mt-4 text-sm">
-                                Your email address is unverified.&nbsp;&nbsp;
+                                {t('TextParagrafPrimary')}&nbsp;&nbsp;
                                 <button
                                     type="button"
                                     onClick={handleVerifildEmail}
-                                    className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                    className="text-foreground underline decoration-neutral-300 cursor-pointer underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                 >
-                                    Click here to resend the verification email.
+                                    {t('Submit')}
                                 </button>
                             </p>
 
                             {status === 'verification-link-sent' && (
                                 <div className="mt-2 text-sm font-medium text-green-600">
-                                    A new verification link has been sent to your email address.
+                                    {t('TextParagrafSecond')}
                                 </div>
                             )}
                         </div>
                     )}
 
                     <div className="flex items-center gap-4">
-                        <Button disabled={pending}>Save</Button>
+                        <Button disabled={pending}>{t('ButtonSave')}</Button>
 
                         <Transition
                             show={recentlySuccessful}
@@ -132,7 +132,7 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                             leave="transition ease-in-out"
                             leaveTo="opacity-0"
                         >
-                            <p className="text-sm text-neutral-600">Saved</p>
+                            <p className="text-sm text-neutral-600">{t('Saved')}</p>
                         </Transition>
                     </div>
                 </form>
