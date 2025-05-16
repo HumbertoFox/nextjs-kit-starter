@@ -8,9 +8,7 @@ import { useTranslations } from 'next-intl';
 export default function DashboardPageClient() {
     const { setBreadcrumbs } = useBreadcrumbs();
     const tb = useTranslations('Breadcrumb');
-    useEffect(() => {
-        setBreadcrumbs([{ title: tb('Dashboard'), href: '/dashboard' }]);
-    }, [setBreadcrumbs, tb]);
+    useEffect(() => setBreadcrumbs([{ title: tb('Dashboard'), href: '/dashboard' }]), [setBreadcrumbs, tb]);
     return (
         <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">

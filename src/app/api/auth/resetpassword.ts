@@ -13,9 +13,7 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
     });
 
     if (!validatedFields.success) {
-        return {
-            errors: validatedFields.error.flatten().fieldErrors,
-        };
+        return { errors: validatedFields.error.flatten().fieldErrors };
     };
 
     const { email, token, password } = validatedFields.data;

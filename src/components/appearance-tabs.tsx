@@ -10,9 +10,7 @@ export default function AppearanceToggleTab({ className = '', ...props }: HTMLAt
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const t = useTranslations('AppearanceToggleTab');
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    useEffect(() => setMounted(true), []);
     const tabs: { value: 'light' | 'dark' | 'system'; icon: LucideIcon; label: string }[] = [
         { value: 'light', icon: Sun, label: t('Light') },
         { value: 'dark', icon: Moon, label: t('Dark') },

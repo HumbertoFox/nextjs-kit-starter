@@ -1,7 +1,7 @@
 'use client';
 
 import { LoaderCircle } from 'lucide-react';
-import { startTransition, useActionState, useState } from 'react';
+import { ChangeEvent, FormEvent, startTransition, useActionState, useState } from 'react';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -16,11 +16,11 @@ export default function ForgotPassword() {
     const [state, action, pending] = useActionState(forgotPassword, undefined);
     const [data, setData] = useState<Required<{ email: string }>>({ email: '' });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         startTransition(() => action(formData));

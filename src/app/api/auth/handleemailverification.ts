@@ -1,19 +1,24 @@
 'use server';
 
-import { getUser } from '@/lib/dal';
 import { sendEmailVerification } from '@/lib/mail';
 import prisma from '@/lib/prisma';
 import crypto from 'crypto';
 
-export async function handleEmailVerification() {
-    const sessionUser = await getUser();
+type FormStateEmailVerification = {
+    error?: string;
+    ststus?: string;
+    success?: string;
+}
 
-    if (!sessionUser?.email) {
+export async function handleEmailVerification(state: FormStateEmailVerification | undefined, formData: FormData) {
+    const email = formData.get('email') as string;
+    const token = formData.get('token') as string;
+
+    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
+    
+    if (!email && !token) {
         return { error: 'Not authenticated' };
     }
-
-    const email = sessionUser.email;
-    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
 
     const isCheckedEmail = await prisma.user.findUnique({ where: { email } });
 
@@ -43,5 +48,5 @@ export async function handleEmailVerification() {
 
     await prisma.verificationToken.deleteMany({ where: { identifier: email } });
 
-    return { error: 'Please check your email.' };
+    return { success: 'Please check your email.' };
 }

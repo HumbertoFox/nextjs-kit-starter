@@ -18,15 +18,16 @@ export async function emailVerifiedChecked() {
     if (isCheckedEmail?.emailVerified) return null;
 
     if (tokenExisting && new Date() > tokenExisting.expires) {
-        await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token: tokenExisting.token } } });
+        return 'verification-link-sent';
+    }
 
+    if (!tokenExisting) {
         const token = crypto.randomBytes(32).toString('hex');
 
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
         await prisma.verificationToken.create({ data: { identifier: email, token, expires } });
 
         const verifyLink = `${process.env.NEXT_URL}/auth/verify-email?token=${token}&email=${email}`;
-
         await sendEmailVerification(email, verifyLink);
 
         return 'verification-link-sent';

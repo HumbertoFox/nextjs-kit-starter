@@ -58,7 +58,7 @@ export default function ResetPasswordClient() {
             <form onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">{t('Email')}</Label>
+                        <Label htmlFor="email">{t('EmailLabel')}</Label>
                         <Input
                             id="email"
                             type="email"
