@@ -27,7 +27,7 @@ export default function ForgotPassword() {
     };
     return (
         <AuthLayout title={t('Title')} description={t('Description')}>
-            {state?.message && <div className="mb-4 text-center text-sm font-medium text-green-400">{state.message}</div>}
+            {state?.message && <div className="mb-4 text-center text-sm font-medium text-blue-600">{t(state.message)}</div>}
 
             <div className="space-y-6">
                 <form onSubmit={submit}>

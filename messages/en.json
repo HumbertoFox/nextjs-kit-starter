@@ -26,7 +26,8 @@
         "RoleTitle": "Select Account Type",
         "RolePlaceholder": "Account Type",
         "RoleItem": "Administrator",
-        "Submit": "Create account"
+        "Submit": "Create account",
+        "Warning": "Something went wrong. Please try again later."
     },
     "Login": {
         "Title": "Log in to your account",
@@ -36,7 +37,10 @@
         "PasswordLabel": "Password",
         "PasswordPlaceholder": "Password",
         "Forgot": "Forgot password?",
-        "Submit": "Log in"
+        "Submit": "Log in",
+        "Message": "Authentication successful! Redirecting to Dashboard please wait...",
+        "WarningOne": "Invalid email or password",
+        "WarningTwo": "Unknown error occurred"
     },
     "ForgotPassword": {
         "Title": "Forgot password",
@@ -45,7 +49,8 @@
         "EmailPlaceholder": "email@example.com",
         "Submit": "Email password reset link",
         "LinkSpan": "Or, return to",
-        "LinkLogin": "log in"
+        "LinkLogin": "log in",
+        "Message": "If your email is registered, you will receive a link to reset your password."
     },
     "ResetPasswordClient": {
         "Title": "Reset password",
@@ -55,7 +60,9 @@
         "PasswordPlaceholder": "Password",
         "PasswordConfirmLabel": "Confirm password",
         "PasswordConfirmPlaceholder": "Confirm password",
-        "Submit": "Reset password"
+        "Submit": "Reset password",
+        "Warning": "Invalid or expired token.",
+        "Message": "Password reset successfully!"
     },
     "ConfirmPassword": {
         "Title": "Confirm your password",
@@ -69,7 +76,10 @@
         "Description": "Please verify your email address by clicking on the link we just emailed to you.",
         "TextParagraf": "A new verification link has been sent to the email address you provided during registration.",
         "Submit": "Resend verification email",
-        "LinkLogin":"Log in"
+        "LinkLogin": "Log in",
+        "ErrorOne": "Not authenticated",
+        "ErrorTow": "email already verified!",
+        "Success": "Please check your email."
     },
     "AppSidebar": {
         "Dashboard": "Dashboard",

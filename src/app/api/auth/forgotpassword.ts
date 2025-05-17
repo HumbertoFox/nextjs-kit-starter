@@ -17,12 +17,12 @@ export async function forgotPassword(state: FormStatePasswordForgot, formData: F
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-        return { message: 'If your email is registered, you will receive a link to reset your password.' };
+        return { message: 'Message' };
     }
 
     const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
 
-    if (tokenExisting && new Date() > tokenExisting.expires) {
+    if (!tokenExisting || new Date() > tokenExisting.expires) {
         const token = crypto.randomBytes(32).toString('hex');
         const expires = new Date(Date.now() + 60 * 60 * 1000);
 
@@ -32,8 +32,8 @@ export async function forgotPassword(state: FormStatePasswordForgot, formData: F
 
         await sendPasswordResetEmail(email, resetLink);
 
-        return { message: 'If your email is registered, you will receive a link to reset your password.' };
+        return { message: 'Message' };
     }
 
-    return { message: 'If your email is registered, you will receive a link to reset your password.' };
+    return { message: 'Message' };
 }

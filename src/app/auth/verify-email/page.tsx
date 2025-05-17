@@ -45,9 +45,8 @@ export default function VerifyEmail() {
                 </div>
             )}
 
-            {(state?.error || state?.success) && (
-                <div className={`mb-4 text-center text-sm font-medium ${state.error ? 'text-red-500' : 'text-blue-500'}`}>{state.error || state.success}</div>
-            )}
+            {state?.success && <div className="mb-4 text-center text-sm font-medium text-blue-600">{t(state.success)}</div>}
+            {state?.error && <div className="mb-4 text-center text-sm font-medium text-red-600">{t(state.error)}</div>}
 
             <form onSubmit={submit} className="space-y-6 text-center">
                 <input type="hidden" name="email" value={data.email} />

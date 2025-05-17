@@ -3,6 +3,7 @@
 import { getUser } from '@/lib/dal';
 import { FormStateUserUpdate, updateUserSchema } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
+import { redirect } from 'next/navigation';
 
 export async function updateUser(state: FormStateUserUpdate, formData: FormData): Promise<FormStateUserUpdate> {
     const validatedFields = updateUserSchema.safeParse({
@@ -17,13 +18,9 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
     const { name, email } = validatedFields.data;
     const sessionUser = await getUser();
 
-    if (!sessionUser?.id) {
-        return { message: 'User not authenticated.' };
-    }
+    if (!sessionUser?.id) return redirect('/');
 
-    const emailInUse = await prisma.user.findUnique({
-        where: { email },
-    });
+    const emailInUse = await prisma.user.findUnique({ where: { email } });
 
     if (emailInUse && emailInUse.id !== sessionUser.id) {
         return { errors: { email: ['This email is already in use.'] } };

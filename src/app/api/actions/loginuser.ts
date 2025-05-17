@@ -21,20 +21,20 @@ export async function loginUser(state: FormStateLoginUser, formData: FormData): 
         const user = await prisma.user.findFirst({ where: { email, deletedAt: null } });
 
         if (!user) {
-            return { warning: 'Invalid email or password' };
+            return { warning: 'WarningOne' };
         }
 
         const isPasswordValid = await compare(password, user.password);
 
         if (!isPasswordValid) {
-            return { warning: 'Invalid email or password' };
+            return { warning: 'WarningOne' };
         }
 
         await createSession(user.id);
 
-        return { message: 'authentication successful! Directing to Dashboard please wait...' };
+        return { message: 'Message' };
     } catch (error) {
         console.error('Unknown error occurred:', error);
-        return { warning: 'Unknown error occurred' };
+        return { warning: 'WarningTwo' };
     };
 }

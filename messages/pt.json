@@ -26,7 +26,8 @@
         "RoleTitle": "Selecione o tipo de conta",
         "RolePlaceholder": "Tipo de conta",
         "RoleItem": "Administrador(a)",
-        "Submit": "Criar uma conta"
+        "Submit": "Criar uma conta",
+        "Warning": "Algo deu errado. Tente novamente mais tarde."
     },
     "Login": {
         "Title": "Entre na sua conta",
@@ -36,7 +37,10 @@
         "PasswordLabel": "Senha",
         "PasswordPlaceholder": "Senha",
         "Forgot": "Esqueceu sua senha?",
-        "Submit": "Entrar"
+        "Submit": "Entrar",
+        "Message": "Autenticação bem-sucedida! Redirecionando para o Painel, aguarde...",
+        "WarningOne": "E-mail ou senha inválidos",
+        "WarningTwo": "Ocorreu um erro desconhecido"
     },
     "ForgotPassword": {
         "Title": "Esqueceu sua senha",
@@ -45,7 +49,8 @@
         "EmailPlaceholder": "email@exemplo.com",
         "Submit": "Link para redefinição de senha de e-mail",
         "LinkSpan": "Ou, volte para",
-        "LinkLogin": "Conecte-se"
+        "LinkLogin": "Conecte-se",
+        "Message": "Se seu e-mail estiver registrado, você receberá um link para redefinir sua senha."
     },
     "ResetPasswordClient": {
         "Title": "Redefinir senha",
@@ -55,7 +60,9 @@
         "PasswordPlaceholder": "Senha",
         "PasswordConfirmLabel": "Confirme sua senha",
         "PasswordConfirmPlaceholder": "Confirme sua senha",
-        "Submit": "Redefinir senha"
+        "Submit": "Redefinir senha",
+        "Warning": "Token inválido ou expirado.",
+        "Message": "Senha redefinida com sucesso!"
     },
     "ConfirmPassword": {
         "Title": "Confirme sua senha",
@@ -69,7 +76,10 @@
         "Description": "Verifique seu endereço de e-mail clicando no link que acabamos de enviar para você.",
         "TextParagraf": "Um novo link de verificação foi enviado para o endereço de e-mail que você forneceu durante o registro.",
         "Submit": "Reenviar e-mail de verificação",
-        "LinkLogin": "Conecte-se"
+        "LinkLogin": "Conecte-se",
+        "ErrorOne": "Não autenticado",
+        "ErrorTow": "e-mail já verificado!",
+        "Success": "Por favor, verifique seu e-mail."
     },
     "AppSidebar": {
         "Dashboard": "Painel",

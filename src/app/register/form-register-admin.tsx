@@ -183,9 +183,7 @@ export default function RegisterAdmin() {
                 </div>
             </form>
 
-            {(state?.warning || state?.message) && (
-                <div className={`mb-4 text-center text-sm font-medium ${state.warning ? 'text-orange-400' : 'text-green-600'}`}>{state.warning || state.message}</div>
-            )}
+            {state?.warning && <div className="mb-4 text-center text-sm font-medium text-orange-400">{t(state.warning)}</div>}
         </AuthLayout>
     );
 }

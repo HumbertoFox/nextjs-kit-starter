@@ -132,9 +132,8 @@ export default function ResetPasswordClient() {
                 </div>
             </form>
 
-            {(state?.message || state?.warning) && (
-                <div className={`mb-4 text-center text-sm font-medium ${state.warning ? 'text-orange-400' : 'text-green-400'}`}>{state.message || state.warning}</div>
-            )}
+            {state?.message && <div className="mb-4 text-center text-sm font-medium text-blue-600">{t(state.message)}</div>}
+            {state?.warning && <div className="mb-4 text-center text-sm font-medium text-red-600">{t(state.warning)}</div>}
         </AuthLayout>
     );
 }

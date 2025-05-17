@@ -97,7 +97,7 @@ export default function Login() {
                                 </TextLink>
                             )}
                         </div>
-                        
+
                         <div className="relative">
                             <Input
                                 id="password"
@@ -129,10 +129,9 @@ export default function Login() {
                 </div>
             </form>
 
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-            {(state?.message || state?.warning) && (
-                <div className={`mb-4 text-center text-sm font-medium ${state.message ? 'text-green-400' : 'text-orange-400'}`}>{state.message || state.warning}</div>
-            )}
+            {status && <div className="mb-4 text-center text-sm font-medium text-blue-600">{status}</div>}
+            {state?.message && <div className="mb-4 text-center text-sm font-medium text-blue-600">{t(state.message)}</div>}
+            {state?.warning && <div className="mb-4 text-center text-sm font-medium text-red-400">{t(state.warning)}</div>}
         </AuthLayout>
     );
 }

@@ -21,7 +21,7 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
     const tokenExisting = await prisma.verificationToken.findUnique({ where: { identifier_token: { identifier: email, token } } });
 
     if (!tokenExisting || tokenExisting.expires < new Date()) {
-        return { warning: 'Invalid or expired token.' };
+        return { warning: 'Warning' };
     }
 
     const hashedPassword = await hash(password, 12);
@@ -33,5 +33,5 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
 
     await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
 
-    return { message: 'Password reset successfully!' };
+    return { message: 'Message' };
 }

@@ -32,6 +32,6 @@ export async function createAdmin(state: FormStateCreateAdmin, formData: FormDat
         return { message: true };
     } catch (error) {
         console.error(error);
-        return { warning: 'Something went wrong. Please try again later.' };
+        return { warning: 'Warning' };
     }
 }
