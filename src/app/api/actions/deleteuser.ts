@@ -32,7 +32,10 @@ export async function deleteUser(state: FormStateUserDelete, formData: FormData)
         return { errors: { password: ['Incorrect password.'] } };
     }
 
-    await prisma.user.update({ where: { id: sessionUser.id }, data: { deletedAt: new Date() } });
+    await prisma.user.update({
+        where: { id: sessionUser.id },
+        data: { deletedAt: new Date() }
+    });
 
     return { message: true };
 }

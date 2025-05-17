@@ -15,7 +15,7 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
     const token = formData.get('token') as string;
 
     const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
-    
+
     if (!email && !token) {
         return { error: 'Not authenticated' };
     }
@@ -34,7 +34,7 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
         const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         await prisma.verificationToken.create({ data: { identifier: email, token, expires } });
 
-        const verifyLink = `${process.env.AUTH_URL}/auth/verify-email?token=${token}&email=${email}`;
+        const verifyLink = `${process.env.NEXT_URL}/auth/verify-email?token=${token}&email=${email}`;
 
         await sendEmailVerification(email, verifyLink);
 
@@ -46,7 +46,7 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
         data: { emailVerified: new Date() }
     });
 
-    await prisma.verificationToken.deleteMany({ where: { identifier: email } });
+    await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
 
     return { success: 'Please check your email.' };
 }

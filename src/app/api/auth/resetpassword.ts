@@ -18,11 +18,9 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
 
     const { email, token, password } = validatedFields.data;
 
-    const record = await prisma.verificationToken.findUnique({
-        where: { identifier_token: { identifier: email, token } }
-    });
+    const tokenExisting = await prisma.verificationToken.findUnique({ where: { identifier_token: { identifier: email, token } } });
 
-    if (!record || record.expires < new Date()) {
+    if (!tokenExisting || tokenExisting.expires < new Date()) {
         return { warning: 'Invalid or expired token.' };
     }
 
@@ -33,9 +31,7 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
         data: { password: hashedPassword }
     });
 
-    await prisma.verificationToken.delete({
-        where: { identifier_token: { identifier: email, token } }
-    });
+    await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
 
     return { message: 'Password reset successfully!' };
 }

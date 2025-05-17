@@ -6,9 +6,7 @@ import crypto from 'crypto';
 import prisma from '@/lib/prisma';
 
 export async function forgotPassword(state: FormStatePasswordForgot, formData: FormData): Promise<FormStatePasswordForgot> {
-    const validatedFields = passwordForgotSchema.safeParse({
-        email: formData.get('email') as string,
-    });
+    const validatedFields = passwordForgotSchema.safeParse({ email: formData.get('email') as string });
 
     if (!validatedFields.success) {
         return { errors: validatedFields.error.flatten().fieldErrors };
@@ -22,16 +20,20 @@ export async function forgotPassword(state: FormStatePasswordForgot, formData: F
         return { message: 'If your email is registered, you will receive a link to reset your password.' };
     }
 
-    const token = crypto.randomBytes(32).toString('hex');
-    const expires = new Date(Date.now() + 60 * 60 * 1000);
+    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
 
-    await prisma.verificationToken.create({ data: { identifier: email, token, expires } });
+    if (tokenExisting && new Date() > tokenExisting.expires) {
+        const token = crypto.randomBytes(32).toString('hex');
+        const expires = new Date(Date.now() + 60 * 60 * 1000);
 
-    const resetLink = `${process.env.AUTH_URL}/auth/reset-password?token=${token}&email=${email}`;
+        await prisma.verificationToken.create({ data: { identifier: email, token, expires } });
 
-    await sendPasswordResetEmail(email, resetLink);
+        const resetLink = `${process.env.NEXT_URL}/auth/reset-password?token=${token}&email=${email}`;
 
-    return {
-        message: 'If your email is registered, you will receive a link to reset your password.',
-    };
+        await sendPasswordResetEmail(email, resetLink);
+
+        return { message: 'If your email is registered, you will receive a link to reset your password.' };
+    }
+
+    return { message: 'If your email is registered, you will receive a link to reset your password.' };
 }
