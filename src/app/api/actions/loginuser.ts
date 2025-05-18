@@ -11,24 +11,18 @@ export async function loginUser(state: FormStateLoginUser, formData: FormData): 
         password: formData.get('password') as string,
     });
 
-    if (!validatedFields.success) {
-        return { errors: validatedFields.error.flatten().fieldErrors, };
-    };
+    if (!validatedFields.success) return { errors: validatedFields.error.flatten().fieldErrors, };
 
     const { email, password } = validatedFields.data;
 
     try {
         const user = await prisma.user.findFirst({ where: { email, deletedAt: null } });
 
-        if (!user) {
-            return { warning: 'WarningOne' };
-        }
+        if (!user) return { warning: 'WarningOne' };
 
         const isPasswordValid = await compare(password, user.password);
 
-        if (!isPasswordValid) {
-            return { warning: 'WarningOne' };
-        }
+        if (!isPasswordValid) return { warning: 'WarningOne' };
 
         await createSession(user.id);
 

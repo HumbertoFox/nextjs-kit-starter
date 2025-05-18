@@ -8,17 +8,13 @@ import prisma from '@/lib/prisma';
 export async function forgotPassword(state: FormStatePasswordForgot, formData: FormData): Promise<FormStatePasswordForgot> {
     const validatedFields = passwordForgotSchema.safeParse({ email: formData.get('email') as string });
 
-    if (!validatedFields.success) {
-        return { errors: validatedFields.error.flatten().fieldErrors };
-    };
+    if (!validatedFields.success) return { errors: validatedFields.error.flatten().fieldErrors };
 
     const { email } = validatedFields.data;
 
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) {
-        return { message: 'Message' };
-    }
+    if (!user) return { message: 'Message' };
 
     const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
 

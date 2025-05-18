@@ -12,24 +12,17 @@ export async function resetPassword(state: FormStatePasswordReset, formData: For
         password_confirmation: formData.get('password_confirmation') as string
     });
 
-    if (!validatedFields.success) {
-        return { errors: validatedFields.error.flatten().fieldErrors };
-    };
+    if (!validatedFields.success) return { errors: validatedFields.error.flatten().fieldErrors };
 
     const { email, token, password } = validatedFields.data;
 
     const tokenExisting = await prisma.verificationToken.findUnique({ where: { identifier_token: { identifier: email, token } } });
 
-    if (!tokenExisting || tokenExisting.expires < new Date()) {
-        return { warning: 'Warning' };
-    }
+    if (!tokenExisting || tokenExisting.expires < new Date()) return { warning: 'Warning' };
 
     const hashedPassword = await hash(password, 12);
 
-    await prisma.user.update({
-        where: { email },
-        data: { password: hashedPassword }
-    });
+    await prisma.user.update({ where: { email }, data: { password: hashedPassword } });
 
     await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
 

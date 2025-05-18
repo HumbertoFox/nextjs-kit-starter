@@ -12,11 +12,7 @@ export async function deleteUserById(formData: FormData) {
         const user = await prisma.user.findUnique({ where: { id: userId } });
         if (!user) return;
 
-        await prisma.user.update({
-            where: { id: userId },
-            data: { deletedAt: new Date() }
-        });
-
+        await prisma.user.update({ where: { id: userId }, data: { deletedAt: new Date() } });
 
         if (user?.role === 'ADMIN') {
             revalidatePath('/dashboard/admins');

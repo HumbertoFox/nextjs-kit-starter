@@ -17,9 +17,7 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
 
     const id = formData.get('id') as string | undefined;
 
-    if (!validatedFields.success) {
-        return { errors: validatedFields.error.flatten().fieldErrors };
-    };
+    if (!validatedFields.success) return { errors: validatedFields.error.flatten().fieldErrors };
 
     const { name, email, password, role } = validatedFields.data;
 
@@ -29,9 +27,7 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
         if (id) {
             const userInDb = await prisma.user.findUnique({ where: { id } });
 
-            if (!userInDb || userInDb.deletedAt) {
-                return { message: false };
-            }
+            if (!userInDb || userInDb.deletedAt) return { message: false };
 
             const hasChanges =
                 userInDb.name !== name ||
@@ -39,26 +35,17 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
                 userInDb.role !== role ||
                 (hashedPassword && userInDb.password !== hashedPassword);
 
-            if (!hasChanges) {
-                return { message: false };
-            }
+            if (!hasChanges) return { message: false };
 
-            await prisma.user.update({
-                where: { id: id },
-                data: { name, email, role, ...(hashedPassword && { password: hashedPassword }) }
-            });
+            await prisma.user.update({ where: { id: id }, data: { name, email, role, ...(hashedPassword && { password: hashedPassword }) } });
 
             return { message: true };
         } else {
             const existingUser = await prisma.user.findFirst({ where: { email } });
 
-            if (existingUser) {
-                return { errors: { email: ['This email is already in use by another user.'] } };
-            }
+            if (existingUser) return { errors: { email: ['This email is already in use by another user.'] } };
 
-            await prisma.user.create({
-                data: { name, email, role, password: hashedPassword! }
-            });
+            await prisma.user.create({ data: { name, email, role, password: hashedPassword! } });
 
             return { message: true };
         }

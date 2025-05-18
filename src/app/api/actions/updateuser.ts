@@ -11,9 +11,7 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
         email: formData.get('email') as string,
     });
 
-    if (!validatedFields.success) {
-        return { errors: validatedFields.error.flatten().fieldErrors };
-    }
+    if (!validatedFields.success) return { errors: validatedFields.error.flatten().fieldErrors };
 
     const { name, email } = validatedFields.data;
     const sessionUser = await getUser();
@@ -22,22 +20,15 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
 
     const emailInUse = await prisma.user.findUnique({ where: { email } });
 
-    if (emailInUse && emailInUse.id !== sessionUser.id) {
-        return { errors: { email: ['This email is already in use.'] } };
-    }
+    if (emailInUse && emailInUse.id !== sessionUser.id) return { errors: { email: ['This email is already in use.'] } };
 
     const dataToUpdate: { name?: string; email?: string } = {};
     if (sessionUser.name !== name) dataToUpdate.name = name;
     if (sessionUser.email !== email) dataToUpdate.email = email;
 
-    if (Object.keys(dataToUpdate).length === 0) {
-        return { message: 'No changes made.' };
-    }
+    if (Object.keys(dataToUpdate).length === 0) return { message: 'No changes made.' };
 
-    await prisma.user.update({
-        where: { id: sessionUser.id },
-        data: dataToUpdate
-    });
+    await prisma.user.update({ where: { id: sessionUser.id }, data: dataToUpdate });
 
     return { success: true };
 }

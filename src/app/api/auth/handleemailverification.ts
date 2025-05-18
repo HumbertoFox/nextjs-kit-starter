@@ -14,17 +14,13 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
     const email = formData.get('email') as string;
     const token = formData.get('token') as string;
 
-    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
-
-    if (!email && !token) {
-        return { error: 'ErrorOne' };
-    }
+    if (!email && !token) return { error: 'ErrorOne' };
 
     const isCheckedEmail = await prisma.user.findUnique({ where: { email } });
 
-    if (isCheckedEmail?.emailVerified) {
-        return { error: 'ErrorTow' };
-    }
+    if (isCheckedEmail?.emailVerified) return { error: 'ErrorTow' };
+
+    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
 
     if (tokenExisting && new Date() > tokenExisting.expires) {
         await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token: tokenExisting.token } } });
@@ -41,10 +37,7 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
         return { status: 'verification-link-sent' };
     }
 
-    await prisma.user.update({
-        where: { email },
-        data: { emailVerified: new Date() }
-    });
+    await prisma.user.update({ where: { email }, data: { emailVerified: new Date() } });
 
     await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
 

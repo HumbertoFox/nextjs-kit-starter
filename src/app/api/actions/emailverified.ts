@@ -17,9 +17,7 @@ export async function emailVerifiedChecked() {
 
     if (isCheckedEmail?.emailVerified) return null;
 
-    if (tokenExisting && new Date() > tokenExisting.expires) {
-        return 'verification-link-sent';
-    }
+    if (tokenExisting && new Date() > tokenExisting.expires) return 'verification-link-sent';
 
     if (!tokenExisting) {
         const token = crypto.randomBytes(32).toString('hex');
