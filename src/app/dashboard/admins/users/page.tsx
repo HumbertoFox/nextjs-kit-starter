@@ -43,9 +43,9 @@ function getVisiblePages(current: number, total: number): (number | string)[] {
     return range;
 }
 
-export default async function Users(props: { searchParams?: Promise<{ page?: string; }>; }) {
+export default async function Users(props: { searchParams?: Promise<{ page?: number; }>; }) {
     const searchParams = await props.searchParams;
-    const currentPage = Number(searchParams?.page) || 1;
+    const currentPage = searchParams?.page || 1;
     const t = await getTranslations('Users');
     const [users, totalUsers] = await Promise.all([
         prisma.user.findMany({
