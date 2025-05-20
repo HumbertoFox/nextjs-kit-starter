@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { deleteUserById } from '@/app/api/actions/deleteadminuser';
 import UsersBreadcrumb from '@/components/breadcrumbs/users-breadcrumb';
 import { Button } from '@/components/ui/button';

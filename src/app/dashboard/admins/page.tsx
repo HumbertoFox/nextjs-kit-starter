@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
