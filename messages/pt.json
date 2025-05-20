@@ -124,6 +124,11 @@
         "DialogButtonCancel": "Cancelar",
         "DialogButtonSubmit": "Sim, Excluir!"
     },
+    "Pagination": {
+        "Previous": "Anterior",
+        "Next": "Próximo",
+        "MorePages": "Mais páginas"
+    },
     "RegisterUserPage": {
         "ValueButton": "Cadastrar"
     },

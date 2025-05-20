@@ -3,6 +3,7 @@ import UsersBreadcrumb from '@/components/breadcrumbs/users-breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import prisma from '@/lib/prisma';
@@ -12,23 +13,62 @@ import Link from 'next/link';
 
 export const metadata = { title: 'Users' };
 
-export default async function Users() {
-    const users = await prisma.user.findMany({ where: { role: 'USER', deletedAt: null } });
+const pageSize = 10;
+
+function getVisiblePages(current: number, total: number): (number | string)[] {
+    const delta = 2;
+    const range: (number | string)[] = [];
+
+    const start = Math.max(2, current - delta);
+    const end = Math.min(total - 1, current + delta);
+
+    range.push(1);
+
+    if (start > 2) {
+        range.push('...');
+    }
+
+    for (let i = start; i <= end; i++) {
+        range.push(i);
+    }
+
+    if (end < total - 1) {
+        range.push('...');
+    }
+
+    if (total > 1) {
+        range.push(total);
+    }
+
+    return range;
+}
+
+export default async function Users(props: { searchParams?: Promise<{ page?: string; }>; }) {
+    const searchParams = await props.searchParams;
+    const currentPage = Number(searchParams?.page) || 1;
     const t = await getTranslations('Users');
+    const [users, totalUsers] = await Promise.all([
+        prisma.user.findMany({
+            where: { role: 'USER', deletedAt: null },
+            select: { id: true, name: true, email: true },
+            skip: (currentPage - 1) * pageSize,
+            take: pageSize,
+        }),
+        prisma.user.count({
+            where: { role: 'USER', deletedAt: null },
+        }),
+    ]);
+    const totalPages = Math.ceil(totalUsers / pageSize);
     return (
         <>
             <UsersBreadcrumb />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+                    {[...Array(3)].map((_, index) => (
+                        <div key={index} className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
+                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                        </div>
+                    ))}
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     <Table className="w-full text-center">
@@ -48,10 +88,8 @@ export default async function Users() {
                                 </TableRow>
                             )}
                             {users.map((user, index) => (
-                                <TableRow key={index} className="cursor-default">
-                                    <TableCell>
-                                        {index + 1}
-                                    </TableCell>
+                                <TableRow key={user.id} className="cursor-default">
+                                    <TableCell>{(currentPage - 1) * 10 + index + 1}</TableCell>
                                     <TableCell>{user.id}</TableCell>
                                     <TableCell>{user.name}</TableCell>
                                     <TableCell>{user.email}</TableCell>
@@ -112,6 +150,44 @@ export default async function Users() {
                     </Table>
                 </div>
             </div>
+            <Pagination className="pb-2.5">
+                <PaginationContent>
+                    <PaginationItem>
+                        <PaginationPrevious
+                            href={currentPage > 1 ? `?page=${currentPage - 1}` : '#'}
+                            aria-disabled={currentPage <= 1}
+                            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
+                        />
+                    </PaginationItem>
+                    {getVisiblePages(currentPage, totalPages).map((page, index) => (
+                        <PaginationItem key={index}>
+                            {page === '...' ? (
+                                <PaginationLink
+                                    href="#"
+                                    aria-disabled
+                                    className="pointer-events-none opacity-50"
+                                >
+                                    ...
+                                </PaginationLink>
+                            ) : (
+                                <PaginationLink
+                                    href={`?page=${page}`}
+                                    isActive={currentPage === page}
+                                >
+                                    {page}
+                                </PaginationLink>
+                            )}
+                        </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                        <PaginationNext
+                            href={currentPage < totalPages ? `?page=${currentPage + 1}` : '#'}
+                            aria-disabled={currentPage >= totalPages}
+                            className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''}
+                        />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </>
     );
 }
