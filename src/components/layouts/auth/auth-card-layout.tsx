@@ -5,7 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Link from 'next/link';
 import { type PropsWithChildren } from 'react';
 
-export default function AuthCardLayout({ children, title, description, }: PropsWithChildren<{ name?: string; title?: string; description?: string; }>) {
+interface AuthLayoutProps {
+    name?: string;
+    title?: string;
+    description?: string;
+};
+
+export default function AuthCardLayout({ children, title, description, }: PropsWithChildren<AuthLayoutProps>) {
     return (
         <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
             <div className="flex w-full max-w-md flex-col gap-6">
