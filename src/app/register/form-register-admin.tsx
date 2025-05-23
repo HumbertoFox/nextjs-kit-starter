@@ -167,7 +167,7 @@ export default function RegisterAdmin() {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="ADMIN">
-                                    {t('roleItem')}
+                                    {t('RoleItem')}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
