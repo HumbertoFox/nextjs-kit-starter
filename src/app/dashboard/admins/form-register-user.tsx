@@ -162,7 +162,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                 </div>
 
                 <div className="grid gap-2">
-                    <Label htmlFor="password_confirmation">Confirm password</Label>
+                    <Label htmlFor="password_confirmation">{t('ConfirmPasswordLabel')}</Label>
                     <div className="relative">
                         <Input
                             id="password_confirmation"
@@ -173,7 +173,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             value={data.password_confirmation}
                             onChange={handleChange}
                             disabled={pending}
-                            placeholder="Confirm password"
+                            placeholder={t('ConfirmPasswordPlaceholder')}
                         />
                         <button
                             type="button"

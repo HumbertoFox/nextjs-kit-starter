@@ -38,8 +38,8 @@ export default function RegisterAdmin() {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
-    const toggleShowPassword = () => setShowPassword(!showPassword);
-    const toggleShowPasswordConfirm = () => setShowPasswordConfirm(!showPasswordConfirm);
+    const toggleShowPassword = () => setShowPassword(prev => !prev);
+    const toggleShowPasswordConfirm = () => setShowPasswordConfirm(prev => !prev);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);

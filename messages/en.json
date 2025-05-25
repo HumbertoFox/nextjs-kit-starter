@@ -175,6 +175,8 @@
         "EmailPlaceholder": "email@example.com",
         "PasswordLabel": "Password",
         "PasswordPlaceholder": "Password",
+        "ConfirmPasswordLabel": "Confirm password",
+        "ConfirmPasswordPlaceholder": "Confirm password",
         "RoleLabel": "Account Type",
         "RoleTitle": "Select Account Type",
         "RolePlaceholder": "Account Type",
