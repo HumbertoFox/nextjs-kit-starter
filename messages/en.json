@@ -27,7 +27,15 @@
         "RolePlaceholder": "Account Type",
         "RoleItem": "Administrator",
         "Submit": "Create account",
-        "Warning": "Something went wrong. Please try again later."
+        "Warning": "Something went wrong. Please try again later.",
+        "ErrorsZod": {
+            "NameRequired": "Name is required",
+            "EmailInvalid": "Invalid email address",
+            "RoleRequiredAdmin": "Role must be either Administrator",
+            "PasswordMin": "Password must be at least 8 characters long",
+            "PasswordConfirmRequired": "Please confirm your password",
+            "PasswordMatch": "Passwords don't match"
+        }
     },
     "Login": {
         "Title": "Log in to your account",
@@ -40,7 +48,15 @@
         "Submit": "Log in",
         "Message": "Authentication successful! Redirecting to Dashboard please wait...",
         "WarningOne": "Invalid email or password",
-        "WarningTwo": "Unknown error occurred"
+        "WarningTwo": "Unknown error occurred",
+        "ErrorsZod": {
+            "EmailRequired": "Email is required",
+            "EmailMin": "Email is required",
+            "EmailInvalid": "Invalid email",
+            "PasswordRequired": "Password is required",
+            "PasswordMin": "Password must be more than 8 characters",
+            "PasswordMax": "Password must be less than 32 characters"
+        }
     },
     "ForgotPassword": {
         "Title": "Forgot password",
@@ -50,7 +66,12 @@
         "Submit": "Email password reset link",
         "LinkSpan": "Or, return to",
         "LinkLogin": "log in",
-        "Message": "If your email is registered, you will receive a link to reset your password."
+        "Message": "If your email is registered, you will receive a link to reset your password.",
+        "ErrorsZod": {
+            "EmailRequired": "Email is required",
+            "EmailMin": "Email is required",
+            "EmailInvalid": "Invalid email"
+        }
     },
     "ResetPasswordClient": {
         "Title": "Reset password",
@@ -62,7 +83,17 @@
         "PasswordConfirmPlaceholder": "Confirm password",
         "Submit": "Reset password",
         "Warning": "Invalid or expired token.",
-        "Message": "Password reset successfully!"
+        "Message": "Password reset successfully!",
+        "ErrorsZod": {
+            "EmailRequired": "Email is required",
+            "EmailMin": "Email is required",
+            "EmailInvalid": "Invalid email",
+            "TokenRequired": "Token is required",
+            "TokenMin": "Token is required",
+            "PasswordMin": "Password must be more than 8 characters",
+            "PasswordConfirmRequired": "Please confirm your password",
+            "PasswordMatch": "Passwords don't match"
+        }
     },
     "ConfirmPassword": {
         "Title": "Confirm your password",
@@ -148,7 +179,16 @@
         "RoleTitle": "Select Account Type",
         "RolePlaceholder": "Account Type",
         "RoleItemUser": "User",
-        "RoleItemAdmin": "Administrator"
+        "RoleItemAdmin": "Administrator",
+        "ErrorsZod": {
+            "NameRequired": "Name is required",
+            "EmailInvalid": "Invalid email address",
+            "EmailAlreadyUse": "This email is already in use",
+            "PasswordMin": "Password must be at least 8 characters long",
+            "PasswordConfirmRequired": "Please confirm your password",
+            "RoleRequiredAdmin": "Role must be either USER or ADMINISTRATOR",
+            "PasswordMatch": "Passwords don't match"
+        }
     },
     "Language": {
         "Title": "Language settings",
@@ -179,7 +219,14 @@
         "Submit": "Click here to resend the verification email.",
         "TextParagrafSecond": "A new verification link has been sent to your email address.",
         "ButtonSave": "Save",
-        "Saved": "Saved"
+        "Saved": "Saved",
+        "ErrorsZod": {
+            "NameRequired": "Name is required",
+            "EmailRequired": "Email is required",
+            "EmailMin": "Email is required",
+            "EmailInvalid": "Invalid email",
+            "EmailAlreadyUse": "This email is already in use"
+        }
     },
     "DeleteUser": {
         "Title": "Delete account",
@@ -192,7 +239,11 @@
         "PasswordLabel": "Password",
         "PasswordPlaceholder": "Password",
         "DialogButtonCancel": "Cancel",
-        "DialogButtonSubmit": "Delete account"
+        "DialogButtonSubmit": "Delete account",
+        "ErrorsZod": {
+            "PasswordMin": "Password must be at least 8 characters long",
+            "PasswordCurrentIncorrect": "Incorrect password"
+        }
     },
     "Password": {
         "Title": "Update password",
@@ -204,7 +255,15 @@
         "ConfirmPasswordLabel": "Confirm password",
         "ConfirmPasswordPlaceholder": "Confirm password",
         "Submit": "Save password",
-        "Saved": "Saved"
+        "Saved": "Saved",
+        "ErrorsZod": {
+            "PasswordCurrentIncorrect": "Current password is incorrect",
+            "PasswordNewCannotOld": "The new password cannot be the same as the old one",
+            "PasswordCurrentMin": "Password must be at least 8 characters long",
+            "PasswordMin": "Password must be at least 8 characters long",
+            "PasswordConfirmRequired": "Please confirm your password",
+            "PasswordMatch": "Passwords don't match"
+        }
     },
     "Appearance": {
         "Title": "Appearance settings",

@@ -4,6 +4,7 @@ import { getUser } from '@/lib/dal';
 import { FormStatePasswordUpdate, passwordUpdateSchema } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 import { compare, hash } from 'bcrypt-ts';
+import { redirect } from 'next/navigation';
 
 export async function updatePassword(state: FormStatePasswordUpdate, formData: FormData): Promise<FormStatePasswordUpdate> {
     const validatedFields = passwordUpdateSchema.safeParse({
@@ -18,17 +19,17 @@ export async function updatePassword(state: FormStatePasswordUpdate, formData: F
 
     const sessionUser = await getUser();
 
-    if (!sessionUser?.id) return { errors: { current_password: ['User not authenticated.'] } };
+    if (!sessionUser?.id) return redirect('/');
 
     const authUser = await prisma.user.findUnique({ where: { id: sessionUser.id } });
 
-    if (!authUser) return { errors: { current_password: ['User not authenticated.'] } };
+    if (!authUser) return redirect('/');
 
     const isValid = await compare(current_password, authUser.password);
 
-    if (!isValid) return { errors: { current_password: ['Current password is incorrect.'] } };
+    if (!isValid) return { errors: { current_password: ['ErrorsZod.PasswordCurrentIncorrect'] } };
 
-    if (current_password === password) return { errors: { password: ['The new password cannot be the same as the old one.'] } };
+    if (current_password === password) return { errors: { password: ['ErrorsZod.PasswordNewCannotOld'] } };
 
     const hashedPassword = await hash(password, 12);
 

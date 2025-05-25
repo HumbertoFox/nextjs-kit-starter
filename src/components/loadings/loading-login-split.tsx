@@ -11,6 +11,10 @@ export default function LoadingLoginSplit() {
                     <Skeleton className="h-4 w-40" />
                 </div>
 
+                <div className="flex items-center justify-center h-full z-10">
+                    <Skeleton className="size-50 rounded-full" />
+                </div>
+
                 <div className="flex flex-col gap-3 mt-auto">
                     <Skeleton className="h-4 w-80" />
                     <Skeleton className="h-3 w-20" />

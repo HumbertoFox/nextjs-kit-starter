@@ -116,7 +116,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         disabled={pending}
                         placeholder={t('NamePlaceholder')}
                     />
-                    <InputError message={state?.errors?.name} />
+                    {state?.errors?.name && <InputError message={t(state.errors.name[0])} />}
                 </div>
 
                 <div className="grid gap-2">
@@ -133,7 +133,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         disabled={pending}
                         placeholder={t('EmailPlaceholder')}
                     />
-                    <InputError message={state?.errors?.email} />
+                    {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
                 </div>
 
                 <div className="grid gap-2">
@@ -158,7 +158,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                         </button>
                     </div>
-                    <InputError message={state?.errors?.password} />
+                    {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
                 </div>
 
                 <div className="grid gap-2">
@@ -183,7 +183,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                         </button>
                     </div>
-                    <InputError message={state?.errors?.password_confirmation} />
+                    {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
                 </div>
 
                 <div className="grid gap-2">
@@ -211,9 +211,8 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             </SelectItem>
                         </SelectContent>
                     </Select>
-                    <InputError message={state?.errors?.role} />
+                    {state?.errors?.role && <InputError message={t(state.errors.role[0])} />}
                 </div>
-
                 <input type="hidden" name="role" value={data.role} />
 
                 <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>

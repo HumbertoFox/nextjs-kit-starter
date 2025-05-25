@@ -69,8 +69,9 @@ export default function ResetPasswordClient() {
                             className="block w-full"
                             readOnly
                             onChange={handleChange}
+                            required
                         />
-                        <InputError message={state?.errors?.email} className="mt-2" />
+                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -86,6 +87,7 @@ export default function ResetPasswordClient() {
                                 autoFocus
                                 onChange={handleChange}
                                 placeholder={t('PasswordPlaceholder')}
+                                required
                             />
                             <button
                                 type="button"
@@ -95,7 +97,7 @@ export default function ResetPasswordClient() {
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.password} />
+                        {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -111,6 +113,7 @@ export default function ResetPasswordClient() {
                                 className="block w-full"
                                 onChange={handleChange}
                                 placeholder={t('PasswordConfirmPlaceholder')}
+                                required
                             />
                             <button
                                 type="button"
@@ -120,7 +123,7 @@ export default function ResetPasswordClient() {
                                 {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.password_confirmation} className="mt-2" />
+                        {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
                     <input type="hidden" name="token" value={data.token} />

@@ -72,6 +72,7 @@ export default function Password() {
                                 className="block w-full"
                                 autoComplete="current-password"
                                 placeholder={t('PasswordCurrentPlaceholder')}
+                                required
                             />
                             <button
                                 type="button"
@@ -81,7 +82,7 @@ export default function Password() {
                                 {showOldPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.current_password} />
+                        {state?.errors?.current_password && <InputError message={t(state.errors.current_password[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -98,6 +99,7 @@ export default function Password() {
                                 className="block w-full"
                                 autoComplete="new-password"
                                 placeholder={t('PasswordNewPlaceholder')}
+                                required
                             />
                             <button
                                 type="button"
@@ -107,7 +109,7 @@ export default function Password() {
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.password} />
+                        {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -123,6 +125,7 @@ export default function Password() {
                                 className="block w-full"
                                 autoComplete="new-password"
                                 placeholder={t('ConfirmPasswordPlaceholder')}
+                                required
                             />
                             <button
                                 type="button"
@@ -132,7 +135,7 @@ export default function Password() {
                                 {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.password_confirmation} />
+                        {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
                     <div className="flex items-center gap-4">

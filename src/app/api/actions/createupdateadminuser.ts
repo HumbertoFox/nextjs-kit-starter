@@ -43,7 +43,7 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
         } else {
             const existingUser = await prisma.user.findFirst({ where: { email } });
 
-            if (existingUser) return { errors: { email: ['This email is already in use by another user.'] } };
+            if (existingUser) return { errors: { email: ['ErrorsZod.EmailAlreadyUse'] } };
 
             await prisma.user.create({ data: { name, email, role, password: hashedPassword! } });
 

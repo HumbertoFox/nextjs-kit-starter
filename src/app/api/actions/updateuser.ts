@@ -20,7 +20,7 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
 
     const emailInUse = await prisma.user.findUnique({ where: { email } });
 
-    if (emailInUse && emailInUse.id !== sessionUser.id) return { errors: { email: ['This email is already in use.'] } };
+    if (emailInUse && emailInUse.id !== sessionUser.id) return { errors: { email: ['ErrorsZod.EmailAlreadyUse'] } };
 
     const dataToUpdate: { name?: string; email?: string } = {};
     if (sessionUser.name !== name) dataToUpdate.name = name;

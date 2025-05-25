@@ -27,7 +27,15 @@
         "RolePlaceholder": "Tipo de conta",
         "RoleItem": "Administrador(a)",
         "Submit": "Criar uma conta",
-        "Warning": "Algo deu errado. Tente novamente mais tarde."
+        "Warning": "Algo deu errado. Tente novamente mais tarde.",
+        "ErrorsZod": {
+            "NameRequired": "Nome é obrigatório",
+            "EmailInvalid": "Endereço de e-mail inválido",
+            "RoleRequiredAdmin": "A função deve ser Administrador",
+            "PasswordMin": "A senha deve ter pelo menos 8 caracteres",
+            "PasswordConfirmRequired": "Por favor confirme sua senha",
+            "PasswordMatch": "As senhas não correspondem"
+        }
     },
     "Login": {
         "Title": "Entre na sua conta",
@@ -40,7 +48,15 @@
         "Submit": "Entrar",
         "Message": "Autenticação bem-sucedida! Redirecionando para o Painel, aguarde...",
         "WarningOne": "E-mail ou senha inválidos",
-        "WarningTwo": "Ocorreu um erro desconhecido"
+        "WarningTwo": "Ocorreu um erro desconhecido",
+        "ErrorsZod": {
+            "EmailRequired": "E-mail é obrigatório",
+            "EmailMin": "E-mail é obrigatório",
+            "EmailInvalid": "E-mail inválido",
+            "PasswordRequired": "Senha é necessária",
+            "PasswordMin": "A senha deve ter mais de 8 caracteres",
+            "PasswordMax": "A senha deve ter menos de 32 caracteres"
+        }
     },
     "ForgotPassword": {
         "Title": "Esqueceu sua senha",
@@ -50,7 +66,12 @@
         "Submit": "Link para redefinição de senha de e-mail",
         "LinkSpan": "Ou, volte para",
         "LinkLogin": "Conecte-se",
-        "Message": "Se seu e-mail estiver registrado, você receberá um link para redefinir sua senha."
+        "Message": "Se seu e-mail estiver registrado, você receberá um link para redefinir sua senha.",
+        "ErrorsZod": {
+            "EmailRequired": "E-mail é obrigatório",
+            "EmailMin": "E-mail é obrigatório",
+            "EmailInvalid": "E-mail inválido"
+        }
     },
     "ResetPasswordClient": {
         "Title": "Redefinir senha",
@@ -62,7 +83,17 @@
         "PasswordConfirmPlaceholder": "Confirme sua senha",
         "Submit": "Redefinir senha",
         "Warning": "Token inválido ou expirado.",
-        "Message": "Senha redefinida com sucesso!"
+        "Message": "Senha redefinida com sucesso!",
+        "ErrorsZod": {
+            "EmailRequired": "E-mail é obrigatório",
+            "EmailMin": "E-mail é obrigatório",
+            "EmailInvalid": "E-mail inválido",
+            "TokenRequired": "Token é necessário",
+            "TokenMin": "Token é necessário",
+            "PasswordMin": "A senha deve ter mais de 8 caracteres",
+            "PasswordConfirmRequired": "Por favor confirme sua senha",
+            "PasswordMatch": "As senhas não correspondem"
+        }
     },
     "ConfirmPassword": {
         "Title": "Confirme sua senha",
@@ -148,7 +179,16 @@
         "RoleTitle": "Selecione o tipo de conta",
         "RolePlaceholder": "Tipo de conta",
         "RoleItemUser": "usuário",
-        "RoleItemAdmin": "Administrador"
+        "RoleItemAdmin": "Administrador",
+        "ErrorsZod": {
+            "NameRequired": "Nome é obrigatório",
+            "EmailInvalid": "Endereço de e-mail inválido",
+            "EmailAlreadyUse": "Este e-mail já está em uso",
+            "PasswordMin": "A senha deve ter pelo menos 8 caracteres",
+            "PasswordConfirmRequired": "Por favor confirme sua senha",
+            "RoleRequiredAdmin": "A função deve ser USUÁRIO ou ADMINISTRADOR(A)",
+            "PasswordMatch": "As senhas não correspondem"
+        }
     },
     "Language": {
         "Title": "Configurações de linguagem",
@@ -179,7 +219,14 @@
         "Submit": "Clique aqui para reenviar o e-mail de verificação.",
         "TextParagrafSecond": "Um novo link de verificação foi enviado para seu endereço de e-mail.",
         "ButtonSave": "Salvar",
-        "Saved": "Salvo"
+        "Saved": "Salvo",
+        "ErrorsZod": {
+            "NameRequired": "Nome é obrigatório",
+            "EmailRequired": "E-mail é obrigatório",
+            "EmailMin": "E-mail é obrigatório",
+            "EmailInvalid": "E-mail inválido",
+            "EmailAlreadyUse": "Este e-mail já está em uso"
+        }
     },
     "DeleteUser": {
         "Title": "Excluir conta",
@@ -192,7 +239,11 @@
         "PasswordLabel": "Senha",
         "PasswordPlaceholder": "Senha",
         "DialogButtonCancel": "Cancelar",
-        "DialogButtonSubmit": "Excluir conta"
+        "DialogButtonSubmit": "Excluir conta",
+        "ErrorsZod": {
+            "PasswordMin": "A senha deve ter pelo menos 8 caracteres",
+            "PasswordCurrentIncorrect": "Senha incorreta"
+        }
     },
     "Password": {
         "Title": "Atualizar senha",
@@ -204,7 +255,15 @@
         "ConfirmPasswordLabel": "Confirme sua senha",
         "ConfirmPasswordPlaceholder": "Confirme sua senha",
         "Submit": "Salvar senha",
-        "Saved": "Salvo"
+        "Saved": "Salvo",
+        "ErrorsZod": {
+            "PasswordCurrentIncorrect": "A senha atual está incorreta",
+            "PasswordNewCannotOld": "A nova senha não pode ser igual à antiga",
+            "PasswordCurrentMin": "A senha deve ter pelo menos 8 caracteres",
+            "PasswordMin": "A senha deve ter pelo menos 8 caracteres",
+            "PasswordConfirmRequired": "Por favor confirme sua senha",
+            "PasswordMatch": "As senhas não correspondem"
+        }
     },
     "Appearance": {
         "Title": "Configurações de aparência",

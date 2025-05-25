@@ -20,7 +20,7 @@ export async function deleteUser(state: FormStateUserDelete, formData: FormData)
     if (!existingUser) return { message: false };
 
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
-    if (!isPasswordCorrect) return { errors: { password: ['Incorrect password.'] } };
+    if (!isPasswordCorrect) return { errors: { password: ['ErrorsZod.PasswordCurrentIncorrect'] } };
 
     await prisma.user.update({ where: { id: sessionUser.id }, data: { deletedAt: new Date() } });
 

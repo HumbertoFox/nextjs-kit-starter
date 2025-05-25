@@ -51,7 +51,7 @@ export default function ConfirmPassword() {
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        <InputError message={state?.errors?.password} />
+                        {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
                     </div>
 
                     <div className="flex items-center">

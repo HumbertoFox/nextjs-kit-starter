@@ -42,8 +42,9 @@ export default function ForgotPassword() {
                             autoFocus
                             onChange={handleChange}
                             placeholder={t('EmailPlaceholder')}
+                            required
                         />
-                        <InputError message={state?.errors?.email} />
+                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     <div className="my-6 flex items-center justify-start">
