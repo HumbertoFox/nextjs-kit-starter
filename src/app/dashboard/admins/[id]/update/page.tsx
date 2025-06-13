@@ -1,5 +1,5 @@
 import RegisterUserForm from '@/app/dashboard/admins/form-register-user';
-import EditUserBreadcrumb from '@/components/breadcrumbs/edit-user-breadcrumb';
+import EditUserBreadcrumb from '@/components/breadcrumbs/update-user-breadcrumb';
 import prisma from '@/lib/prisma';
 import { User } from '@/types';
 import { getTranslations } from 'next-intl/server';

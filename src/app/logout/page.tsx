@@ -11,9 +11,9 @@ export default function Logout() {
         const logout = async () => {
             const success = await deleteSession();
             if (success) {
-                router.push('/');
-            } else {
                 router.push('/login');
+            } else {
+                router.push('/');
             };
         };
         const timer = setTimeout(logout, 1000);
