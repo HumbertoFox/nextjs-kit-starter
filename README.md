@@ -20,12 +20,23 @@ New user registration uses **Next.js 15 (App Router)**, **Shadcn/ui** visual lay
 
 ### 📁 Files Involved
 
-| Path                                    | Description                                              |
-|-----------------------------------------|----------------------------------------------------------|
-| `app/dashboard/admins/registerpage.tsx` | Registration page that renders the component `Register`  |
-| `app/api/actions/register.ts`           | Server action that processes and stores the registration |
-| `lib/zod.ts`                            | Form validation scheme with Zod                          |
-| `lib/prisma.ts`                         | Prisma Client instance for database persistence          |
+| Path                             | Description                                                        |
+|----------------------------------|--------------------------------------------------------------------|
+| `app/register/page.tsx`          | Registration page that renders the component `form-register-admin` |
+| `app/api/actions/createadmin.ts` | Server action that processes and stores the registration           |
+| `lib/definitions.ts`             | Form validation scheme with Zod                                    |
+| `lib/prisma.ts`                  | Prisma Client instance for database persistence                    |
+
+---
+
+### 📁 Files Involved
+
+| Path                                       | Description                                              |
+|--------------------------------------------|----------------------------------------------------------|
+| `app/dashboard/admins/register´/page.tsx`  | Registration page that renders the component `Register`  |
+| `app/api/actions/createupdateadminuser.ts` | Server action that processes and stores the registration |
+| `lib/definitions.ts`                       | Form validation scheme with Zod                          |
+| `lib/prisma.ts`                            | Prisma Client instance for database persistence          |
 
 ---
 
@@ -101,16 +112,17 @@ The login functionality of this app uses **Next.js 15 (App Router)**, **jose.js*
 ### 🧩 Components and Features
 
 #### 1. Components and Features
-- Fields: `email`, `password`, `remember me`
+- Fields: `email`, `password`
 - Field validation with `zod`
 - Feedback real-time error
 - Post-login redirect to `/dashboard`
 
 ---
 
-#### 2. Server Action: `loginIn`
+#### 2. Server Action: `loginUser`
 - Receives and validates form data
-- Authenticate with `signIn('credentials')`
+- Authenticate with `DataBase`
+- Create `createSession` user ID
 - Returns error or success messages to the front-end
 
 ---
@@ -506,7 +518,6 @@ npm install
 
 ```bash
 
-AUTH_TRUST_HOST=
 DATABASE_URL=
 AUTH_SECRET=
 AUTH_URL=
@@ -514,8 +525,6 @@ SMTP_HOST=
 SMTP_PORT=
 SMTP_USER=
 SMTP_PASS=
-AUTH_TRUST_HOST="false" **development**
-AUTH_TRUST_HOST="true" **production**
 
 ```
 
