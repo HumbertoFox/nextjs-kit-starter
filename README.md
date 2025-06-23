@@ -12,291 +12,627 @@
 
 </div>
 
-## 📝 User Registration
+## 👤 Admin Registration Page (Next.js + Prisma)
+This project includes a protected admin registration page. The form is only accessible if no admin user exists yet in the database. It’s built with Next.js App Router, Prisma, bcrypt-ts, React Hooks, and Zod validation.
 
-New user registration uses **Next.js 15 (App Router)**, **Shadcn/ui** visual layout, validation with **Zod**, persistence via **Prisma** and password hashing with **bcrypt-ts**. After registration, the user is automatically authenticated with `auth` standard.
+## 📁 File Structure
 
----
+```bash
 
-### 📁 Files Involved
+/app
+  /register
+    └── page.tsx                # Redirects if admin exists
+    └── form-register-admin.tsx # Client-side admin registration form
 
-| Path                             | Description                                                        |
-|----------------------------------|--------------------------------------------------------------------|
-| `app/register/page.tsx`          | Registration page that renders the component `form-register-admin` |
-| `app/api/actions/createadmin.ts` | Server action that processes and stores the registration           |
-| `lib/definitions.ts`             | Form validation scheme with Zod                                    |
-| `lib/prisma.ts`                  | Prisma Client instance for database persistence                    |
+/app/api/actions
+  └── createadmin.ts           # Server-side logic for admin creation
 
----
-
-### 📁 Files Involved
-
-| Path                                       | Description                                              |
-|--------------------------------------------|----------------------------------------------------------|
-| `app/dashboard/admins/register´/page.tsx`  | Registration page that renders the component `Register`  |
-| `app/api/actions/createupdateadminuser.ts` | Server action that processes and stores the registration |
-| `lib/definitions.ts`                       | Form validation scheme with Zod                          |
-| `lib/prisma.ts`                            | Prisma Client instance for database persistence          |
-
----
-
-### 🧩 Components and Features
-
-#### 1. Registration Form
-- Fields: `name`, `email`, `role`, `password`, `password_confirmation`
-- Validation with Zod (client and server side)
-- Auto-focus email on error
-- Displaying success or error messages
-- Automatic authentication after successful registration
-
----
-
-#### 2. Server Action: `registerIn`
-- Validates fields with `signUpSchema` (Zod)
-- Check if the email is already registered
-- Create new user with encrypted password
-- Returns feedback messages to the client
-
----
-
-### 🔁 Complete Registration Flow
-
-1. User accesses `/register`
-2. Form is filled and submitted
-3. Data is sent to `registerIn` via server action
-4. `registerIn`:
-   - Validates with Zod
-   - Check for duplicate e-mail
-   - Create user (password hash included)
-5. If successful:
-   - Clear the form
-   - Perform automatic login with `signIn`
-6. In case of error:
-   - Shows messages like: "Data already registered", "Something went wrong"
-
----
-
-### ✅ Additional Resources
-
-- **Password Confirmation**: Validation between `password` e `password_confirmation`
-- **Show/Hide Password**: Implemented with `lucide-react` (`Eye`/`EyeClosed`)
-- **Visual messages**: Dynamically styled based on success or failure
-- **Button with loading state**: Uses `LoaderCircle` when `pending = true`
-
----
-
-### 🔐 Security
-
-- Password Hash with `bcrypt-ts` (12 rounds)
-- Single email check before creating user
-- No passwords stored in plain text
-
----
-
-## 🔐 User Login
-
-The login functionality of this app uses **Next.js 15 (App Router)**, **jose.js**, **bcrypt-ts**, authentication by credentials and reactive forms with `useActionState`.
-
----
-
-### 📁 Files Involved
-
-| path                         | Description                                     |
-|------------------------------|-------------------------------------------------|
-| `app/login/page.tsx`         | Login page with asynchronous loading            |
-| `app/login/login-client.tsx` | Client-side component with form and state logic |
-| `app/api/actions/login.ts`   | Server action that authenticates the user       |
-
----
-
-### 🧩 Components and Features
-
-#### 1. Components and Features
-- Fields: `email`, `password`
-- Field validation with `zod`
-- Feedback real-time error
-- Post-login redirect to `/dashboard`
-
----
-
-#### 2. Server Action: `loginUser`
-- Receives and validates form data
-- Authenticate with `DataBase`
-- Create `createSession` user ID
-- Returns error or success messages to the front-end
-
----
-
-#### 3. Settings Nextjs (`auth.ts`)
-- Authentication via `DataBase`
-- Password verification with `bcrypt-ts`
-- Sessions managed via JWT
-- User role = 'ADMIN' or 'USER'
-- Session time 15 min idle disconnects
-
-```bach
-
-    const expTimestamp = Math.floor(Date.now() / 1000) + 15 * 60;
+/lib
+  └── prisma.ts                # Prisma client
+  └── session.ts               # Session management
+  └── definitions.ts           # Zod schema definitions
 
 ```
 
 ---
 
-### 🔁 Full Login Flow
+## 🚦 Redirect Logic (page.tsx)
 
-1. User accesses `/login`
-2. Form is displayed and filled in
-3. Sending calls to server action `loginIn`
-4. Validation and authentication are done on the server
-5. In case of success:
-   - User is redirected to `/dashboard`
-6. In case of error:
-   - Error messages are displayed on the form
+```tsx
 
----
+const isUserAdmin = await prisma.user.findMany({ where: { role: 'ADMIN' } });
+if (isUserAdmin.length > 0) redirect('/dashboard');
 
-### ✅ Additional Resources
+```
 
-- **Show/hide password**: with icons (`lucide-react`)
-- **Temporary messages**: success and visible errors in UI
-- **Automatic redirection if user is already logged in**
+If an ADMIN user already exists, the user is redirected to `/dashboard`.
+If not, the admin registration form is shown.
 
 ---
 
-### 🛡️ Security
+## 🧾 Admin Registration Form
 
-- Authentication via JWT (`'jwt'`)
-- Passwords protected with `bcrypt-ts`
-- Tokens expired removed from database automatically
-- No automatic redirection by NextAuth, avoiding silent failures
+### The form includes the following fields:
 
----
+- Name
 
-## ⚙️ Account Settings
+- Email
 
-The User Settings section offers three main functionalities: **profile editing**, **password change** e **appearance customization**. Tall are protected by active session (`nextjs`) and follow modern standards with form validation, visual transitions and interactive feedback.
+- Password
 
----
+- Password confirmation
 
-### 🧑‍💼 Update Profile
+- Role (locked to ADMIN)
 
-> **Page:** `/dashboard/settings/profile`  
-> **Server Action:** `updateUser`
+### Validation includes:
 
----
+- Required fields
 
-#### Features:
-- Update of **name** e **email**
-- Pending email verification with link resending
-- Feedback "Saved" with animation
-- Field validation via `Zod`
-- Duplicate email blocking at the bank
-- Immediate session update upon success
+- Valid email format
 
----
+- Password match
 
-#### Security:
-- Check if new email already exists before updating
-- Validates mandatory fields
-- Redirects to logout after sending verification link
+- Strong password (handled by Zod)
+
+### UX features:
+
+- Show/hide password toggle
+
+- Inline error messages
+
+- Loading spinner in the submit button
 
 ---
 
-### 🔐 Password Change
+## 🔐 Server-side Logic (createadmin.ts)
 
-> **Page:** `/dashboard/settings/password`  
-> **Server Action:** `updatePassword`
+```ts
 
----
+const hashedPassword = await bcrypt.hash(password, 12);
+const user = await prisma.user.create({ data: { name, email, role, password: hashedPassword } });
 
-#### Features:
-- Fields: `current_password`, `password`, `password_confirmation`
-- Validation with `Zod`:
-  - New password ≠ current password
-  - Mandatory fields
-- Feedback with smooth transition "Saved"
-- Button to show/hide passwords (`lucide-react`)
+```
 
----
+### The createAdmin function:
 
-#### Security:
-- Validates the current password with `bcrypt.compare`
-- Encrypt new password with `bcrypt.hash`
-- Prevents changing if new password is the same as current one
+1. Validates form data using Zod.
 
----
+2. Hashes the password with bcrypt-ts.
 
-### 🎨 Appearance
+3. Creates the user in the database using Prisma.
 
-> **Page:** `/dashboard/settings/appearance`
+4. Automatically starts a session.
+
+On failure, it returns a generic warning that is displayed in the UI.
 
 ---
 
-#### Funcionalidades:
-- Switching between themes: `Light`, `Dark` and `System`
-- Uses `next-themes` and `lucide-react` for icon control
-- Stylish button highlighted in active theme
-- Automatic persistence via browser localStorage
+## 📋 How to Use
+
+1. Clone this repository.
+
+2. Set up your environment variables, especially DATABASE_URL.
+
+3. Run the Prisma migrations:
+
+```bash
+
+npx prisma migrate dev
+
+```
+
+4. Start the development server:
+
+```bash
+
+npm run dev
+
+```
+
+5. Visit `http://localhost:3000`.
+
+If no admin exists, the form will appear. Otherwise, you'll be redirected.
 
 ---
 
-### 🧱 Reusable Structure and Components
+## ✅ Tech Stack
 
-| Component                                | Description                                              |
-|------------------------------------------|----------------------------------------------------------|
-| `AppLayout`                              | Main application layout with breadcrumb                  |
-| `SettingsLayout`                         | Specific layout for settings pages                       |
-| `HeadingSmall`                           | Header with section title and description                |
-| `Input`, `Label`, `Button`, `InputError` | Basic UI with integration for feedback and accessibility |
-| `AppearanceToggleTab`                    | Interactive theme selection button                       |
+- Next.js (App Router)
 
----
+- Prisma ORM
 
-### 🔁 Visual Feedback Flow
+- Zod (form validation)
 
-- All actions have immediate returns with:
-  - Field-specific error messages
-  - Success feedback with transition
-  - Buttons with charging status (`pending`)
+- bcrypt-ts (password hashing)
+
+- React Hooks
+
+- next-intl (internationalization)
+
+- lucide-react (icons)
 
 ---
 
-### 🔐 Session Requirements
+## 💡 Notes
 
-Each of the features requires:
-- User authenticated via `auth()` (server side)
-- Active session (`useSession()` on the client)
+- The registration is one-time only: only allowed if no admin exists.
 
----
+- The role field is fixed to ADMIN to prevent arbitrary user types.
 
-### 🔄 How to switch between authentication layout templates
-
-The file responsible for defining the authentication layout is:
-
-> **Page:** `/components/layouts/auth-layout.tsx`
+- All texts are localized using next-intl for multi-language support.
 
 ---
 
-#### Features:
-- Changing layout templates for authentication pages.
-- Three templates available: `auth-card-layout`, `auth-simple-layout`, and `auth-split-layout`.
-- `AuthLayout` component used to wrap layouts with `children`, `title`, and `description`.
+## 🧩 Overview
+
+This login module includes:
+
+- A server component (LoginPage) that wraps the login form in a Suspense boundary.
+
+- A client component (LoginClient) that renders the form.
+
+- A server action (loginUser) that handles user authentication securely on the server side.
 
 ---
 
-### 📁 Available templates
+### 📁 File Structure
 
-| Template              | Description                                                                    |
-|-----------------------|--------------------------------------------------------------------------------|
-| `auth-card-layout`    | Card layout, ideal for forms and simple interactions.                          |
-| `auth-simple-layout`  | Simple and straightforward layout, with a basic structure.                     |
-| `auth-split-layout`   | Split layout, with one section for content and another for images or graphics. |
+```pgsql
+
+/login
+ ├── page.tsx                <- Server Component (LoginPage)
+ ├── login-client.tsx        <- Client Component (Login)
+/api/actions/loginuser.ts    <- Server Action for login
+
+```
 
 ---
 
-### 🔁 How to switch between templates
+1. 🧠 LoginPage – Server Component
 
-To change the layout template, simply replace the layout import in the file `auth-layout.tsx`.
+```tsx
+
+import { Suspense } from 'react';
+import LoginClient from './login-client';
+import LoadingLoginSimple from '@/components/loadings/loading-login-simple';
+
+export const metadata = { title: 'Log in' };
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<LoadingLoginSimple />}>
+            <LoginClient />
+        </Suspense>
+    );
+}
+
+```
+
+---
+
+# 2. 🧾 LoginClient – Login Form (Client Component)
+
+### Features:
+
+- Controlled inputs with useState.
+
+- Validation error messages via state.errors.
+
+- Password visibility toggle.
+
+- Loading feedback while submitting.
+
+- Internationalization via next-intl.
+
+- Redirects to /dashboard on success.
+
+### Hooks used:
+
+- useActionState() → Executes loginUser.
+
+- useEffect() → Handles URL query params (like ?status=...).
+
+- useRef() → For setting input focus.
+
+- useRouter() → To programmatically redirect.
+
+### Flow:
+
+- User fills the form → submits it.
+
+- Calls the loginUser server action via useActionState.
+
+- Handles validation errors, messages, and redirection based on result.
+
+---
+
+# 3. 🔐 loginUser – Server Action
+
+```ts
+
+'use server';
+
+import prisma from '@/lib/prisma';
+import { compare } from 'bcrypt-ts';
+import { createSession } from '@/lib/session';
+
+export async function loginUser(state, formData) {
+    const validatedFields = signInSchema.safeParse({
+        email: formData.get('email'),
+        password: formData.get('password'),
+    });
+
+    if (!validatedFields.success)
+        return { errors: validatedFields.error.flatten().fieldErrors };
+
+    const { email, password } = validatedFields.data;
+
+    try {
+        const user = await prisma.user.findFirst({ where: { email, deletedAt: null } });
+        if (!user || !(await compare(password, user.password)))
+            return { warning: 'WarningOne' };
+
+        await createSession(user.id);
+        return { message: 'Message' };
+    } catch (error) {
+        console.error(error);
+        return { warning: 'WarningTwo' };
+    }
+}
+
+```
+
+### Key Logic:
+
+- Validates email and password using Zod schema.
+
+- Finds the user in the Prisma database.
+
+- Compares hashed password using bcrypt-ts.
+
+- If successful, creates a session.
+
+- Returns validation errors, warnings, or a success message.
+
+---
+
+# 4. 🌍 Translations with `next-intl`
+
+The form uses useTranslations('Login') for localization. Example:
+
+```tsx
+
+const t = useTranslations('Login');
+
+<Label htmlFor="email">{t('EmailLabel')}</Label>
+
+```
+
+You’ll need translation files like:
+
+```json
+
+// messages/en.json
+{
+  "Login": {
+    "Title": "Log In",
+    "Description": "Welcome back! Please sign in.",
+    "EmailLabel": "Email",
+    "EmailPlaceholder": "Enter your email",
+    "PasswordLabel": "Password",
+    "PasswordPlaceholder": "Enter your password",
+    "Forgot": "Forgot password?",
+    "Submit": "Sign In",
+    "Message": "Login successful!",
+    "WarningOne": "Invalid credentials.",
+    "WarningTwo": "Unexpected error. Please try again."
+  }
+}
+
+```
+
+---
+
+# ✅ Requirements
+
+To make everything work, ensure you have:
+
+- ✅ zod for validation (signInSchema).
+
+- ✅ bcrypt-ts for password hashing/comparison.
+
+- ✅ prisma and a User model with fields: email, password, deletedAt.
+
+- ✅ Session handling with createSession(user.id).
+
+- ✅ Translation setup with next-intl.
+
+---
+
+# 🧪 How to Test
+
+1. Login Failure: Try with invalid credentials → You should see an error.
+
+2. Prefilled email: Visit a URL like ?email=test@example.com&status=created → The form is prefilled and a message is shown.
+
+3. Password Toggle: Click the eye icon to toggle password visibility.
+
+4. Forgot Password: Link appears only when status is not set.
+
+5. Success: On correct login, redirects to `/dashboard`.
+
+---
+
+# 🛡️ Tutorial: JWT Authentication with HTTP-only Cookies in Next.js (App Router)
+
+This authentication system uses:
+
+- jose for JWT signing and verification
+
+- HTTP-only cookies for secure session storage
+
+- Next.js middleware for route protection
+
+- Prisma ORM to fetch authenticated user data
+
+---
+
+# 🧱 Project Structure Overview
+
+The system is divided into three key modules:
+
+1. session.ts – Session management: create, verify, update, and decrypt JWTs
+
+2. getUser.ts – Retrieves the current authenticated user from the database
+
+3. middleware.ts – Protects routes based on session state
+
+---
+
+# 📦 1. session.ts – Session Management with JWT
+
+⚙️ Initial Setup
+
+```ts
+
+import 'server-only';
+import { SignJWT, jwtVerify } from 'jose';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+if (!process.env.AUTH_SECRET) throw new Error('SECRET is not defined');
+const secretKey = process.env.AUTH_SECRET;
+const encodedKey = new TextEncoder().encode(secretKey);
+
+```
+
+- Loads a secret key from the environment (AUTH_SECRET)
+
+- This key is used to sign and verify JWTs using HS256 algorithm
+
+---
+
+# 🔐 createSession(userId: string)
+
+Generates a signed JWT (valid for 15 minutes) and sets it in a secure, HTTP-only cookie named sessionAuth.
+
+```ts
+
+export async function createSession(userId: string): Promise<void> { ... }
+
+```
+
+- Cookie attributes:
+
+  - httpOnly: can't be accessed via JavaScript
+
+  - secure: HTTPS-only
+
+  - sameSite: 'lax': prevents CSRF
+
+---
+
+# 🔎 decrypt(session: string)
+
+Decodes and verifies the JWT token. Returns the payload or null if invalid.
+
+```ts
+
+export async function decrypt(session: string | undefined = '') { ... }
+
+```
+
+---
+
+# ✅ verifySession()
+
+Checks if a valid session exists. If not, redirects to /login.
+
+```ts
+
+export async function verifySession(): Promise<{ isAuth: boolean; userId: string; }> { ... }
+
+```
+
+---
+
+# 🧾 getSession()
+
+Returns the session payload if present, without redirecting.
+
+```ts
+
+export async function getSession() { ... }
+
+```
+
+---
+
+# 🔄 updateSession()
+
+If the session is close to expiring (less than 5 minutes left), this function renews it with a new token.
+
+```ts
+
+export async function updateSession() { ... }
+
+```
+
+---
+
+# 👤 2. getUser.ts – Fetch Authenticated User
+
+```ts
+
+import 'server-only';
+import { cache } from 'react';
+import prisma from './prisma';
+import { verifySession } from './session';
+
+```
+
+---
+
+# 📥 getUser()
+
+Fetches the user from the database using the ID from the session.
+
+```ts
+
+export const getUser = cache(async () => {
+  const session = await verifySession();
+  ...
+});
+
+```
+
+- Uses Prisma to get user details
+
+- Wrapped in cache() for server component efficiency
+
+---
+
+# 🌐 3. middleware.ts – Route Protection
+
+This middleware handles redirection based on whether the user is authenticated.
+
+```ts
+
+import { NextRequest, NextResponse } from 'next/server';
+import { updateSession } from './lib/session';
+
+```
+
+---
+
+# 🔄 middleware(req: NextRequest)
+
+- Redirects unauthenticated users away from protected routes
+
+- Prevents logged-in users from visiting public routes like /login
+
+```ts
+
+export default async function middleware(req: NextRequest) { ... }
+
+```
+
+---
+
+# 🎯 matcher Configuration
+
+Only runs the middleware on relevant paths (excludes APIs and static assets):
+
+```ts
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|videos/).*)']
+}
+
+```
+
+---
+
+# ✅ How to Use It in Your App
+
+### 1. Environment Variable
+In your .env file:
+
+ ```ini
+
+ AUTH_SECRET=your_super_secure_secret_key
+
+```
+
+Use a strong, random secret
+
+---
+
+### 2. Login Example
+
+When a user logs in successfully:
+
+```ts
+
+await createSession(user.id);
+redirect('/dashboard');
+
+```
+
+---
+
+### 3. Logout Example
+
+To destroy the session:
+
+```ts
+
+(await cookies()).set('sessionAuth', '', { expires: new Date(0) });
+redirect('/login');
+
+```
+
+---
+
+### 4. Use getUser() in Server Components
+
+```ts
+
+import { getUser } from '@/lib/getUser';
+
+export default async function DashboardPage() {
+  const user = await getUser();
+
+  return <div>Welcome, {user?.name}</div>;
+}
+
+```
+
+---
+
+# 🔐 Security Notes
+
+- JWT is stored in a secure httpOnly cookie → not accessible to JS
+
+- Tokens are short-lived (15 min) and auto-renewed
+
+- Session renewal is handled transparently in middleware
+
+- All protected routes are checked on every request server-side
+
+---
+
+# 📌 Summary
+
+This setup provides:
+
+- Secure session-based authentication with JWT
+
+- Route protection using middleware
+
+- Prisma-based user management
+
+- Automatic session renewal
 
 ---
 
@@ -433,18 +769,6 @@ The structure remains the same. The `AppLayout` component renders the chosen lay
 
 ---
 
-### 🔐 Session Requirements
-
-This layout relies on authentication:
-
-- User authenticated via `next-auth`.
-
-- Active session verified with `useSession()`.
-
-- Layout does not render if `session?.user` is missing.
-
----
-
 ### 🔒 layout Administrator
 
 <div align="center">
@@ -518,6 +842,7 @@ npm install
 
 ```bash
 
+NEXT_URL=
 DATABASE_URL=
 AUTH_SECRET=
 AUTH_URL=
