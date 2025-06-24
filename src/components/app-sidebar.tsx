@@ -19,8 +19,8 @@ export function AppSidebar({ user }: { user: User }) {
     ];
     const adminNavItems: NavItem[] = [
         { title: t('Administrators'), href: '/dashboard/admins', icon: UserRoundCog },
-        { title: t('Register'), href: '/dashboard/admins/register', icon: UserRoundPlus },
         { title: t('Users'), href: '/dashboard/admins/users', icon: UsersRound },
+        { title: t('Register'), href: '/dashboard/admins/register', icon: UserRoundPlus },
     ];
     const footerNavItems: NavItem[] = [
         { title: t('Repository'), href: 'https://github.com/HumbertoFox/next-auth-start-kit', icon: Folder, },

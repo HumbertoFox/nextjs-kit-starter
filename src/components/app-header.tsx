@@ -19,42 +19,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
+    { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
 ];
 
 const adminNavItems: NavItem[] = [
-    {
-        title: 'Administrators',
-        href: '/dashboard/admins',
-        icon: UserRoundCog,
-    },
-    {
-        title: 'Register',
-        href: '/dashboard/admins/register',
-        icon: UserRoundPlus,
-    },
-    {
-        title: 'Users',
-        href: '/dashboard/admins/users',
-        icon: UsersRound,
-    },
+    { title: 'Administrators', href: '/dashboard/admins', icon: UserRoundCog },
+    { title: 'Users', href: '/dashboard/admins/users', icon: UsersRound },
+    { title: 'Register', href: '/dashboard/admins/register', icon: UserRoundPlus },
 ];
 
 const rightNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/HumbertoFox/next-auth-start-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Developer',
-        href: 'https://betofoxnet-info.vercel.app/',
-        icon: BookOpen,
-    },
+    { title: 'Repository', href: 'https://github.com/HumbertoFox/next-auth-start-kit', icon: Folder },
+    { title: 'Developer', href: 'https://betofoxnet-info.vercel.app/', icon: BookOpen },
 ];
 
 const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
