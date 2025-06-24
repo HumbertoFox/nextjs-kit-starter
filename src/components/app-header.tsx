@@ -17,32 +17,29 @@ import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-const mainNavItems: NavItem[] = [
-    { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
-];
-
-const adminNavItems: NavItem[] = [
-    { title: 'Administrators', href: '/dashboard/admins', icon: UserRoundCog },
-    { title: 'Users', href: '/dashboard/admins/users', icon: UsersRound },
-    { title: 'Register', href: '/dashboard/admins/register', icon: UserRoundPlus },
-];
-
-const rightNavItems: NavItem[] = [
-    { title: 'Repository', href: 'https://github.com/HumbertoFox/next-auth-start-kit', icon: Folder },
-    { title: 'Developer', href: 'https://betofoxnet-info.vercel.app/', icon: BookOpen },
-];
+import { useTranslations } from 'next-intl';
 
 const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
-interface AppHeaderProps {
-    user: User;
-}
-
-export function AppHeader({ user }: AppHeaderProps) {
+export function AppHeader({ user }: { user: User }) {
     const isAdmin = user.role === 'ADMIN';
     const pathName = usePathname();
     const getInitials = useInitials();
+    const t = useTranslations('AppSidebar');
+
+    const mainNavItems: NavItem[] = [
+        { title: t('Dashboard'), href: '/dashboard', icon: LayoutGrid },
+    ];
+    const adminNavItems: NavItem[] = [
+        { title: t('Administrators'), href: '/dashboard/admins', icon: UserRoundCog },
+        { title: t('Users'), href: '/dashboard/admins/users', icon: UsersRound },
+        { title: t('Register'), href: '/dashboard/admins/register', icon: UserRoundPlus },
+    ];
+    const rightNavItems: NavItem[] = [
+        { title: t('Repository'), href: 'https://github.com/HumbertoFox/next-auth-start-kit', icon: Folder },
+        { title: t('Developer'), href: 'https://betofoxnet-info.vercel.app/', icon: BookOpen },
+    ];
+
     const navItems = isAdmin ? [...mainNavItems, ...adminNavItems] : mainNavItems;
     return (
         <>
