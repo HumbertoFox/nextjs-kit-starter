@@ -8,10 +8,16 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import prisma from '@/lib/prisma';
 import { UserPen, UserX } from 'lucide-react';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
-export const metadata = { title: 'Users' };
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('Users.Metadata');
+  return {
+    title: t('Title')
+  };
+};
 
 const pageSize = 10;
 

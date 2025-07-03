@@ -10,8 +10,14 @@ import prisma from '@/lib/prisma';
 import { getUser } from '@/lib/dal';
 import { deleteUserById } from '@/app/api/actions/deleteadminuser';
 import { getTranslations } from 'next-intl/server';
+import { Metadata } from 'next';
 
-export const metadata = { title: 'Administrators' };
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('Admins.Metadata');
+  return {
+    title: t('Title')
+  };
+};
 
 export default async function Admins() {
     const session = await getUser();

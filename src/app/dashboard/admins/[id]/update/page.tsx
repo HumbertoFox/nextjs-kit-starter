@@ -2,6 +2,7 @@ import RegisterUserForm from '@/app/dashboard/admins/form-register-user';
 import EditUserBreadcrumb from '@/components/breadcrumbs/update-user-breadcrumb';
 import prisma from '@/lib/prisma';
 import { User } from '@/types';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 interface UserProps {
@@ -11,7 +12,12 @@ interface UserProps {
     readonly role: string;
 }
 
-export const metadata = { title: 'Update' };
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('Update.Metadata');
+  return {
+    title: t('Title')
+  };
+};
 
 export default async function Update({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

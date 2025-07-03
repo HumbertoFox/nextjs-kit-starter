@@ -1,7 +1,14 @@
 import { getUser } from '@/lib/dal';
 import ProfilePageClient from './profile-client';
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = { title: 'Profile' };
+export const generateMetadata = async (): Promise<Metadata> => {
+    const t = await getTranslations('Profile.Metadata');
+    return {
+        title: t('Title')
+    };
+};
 
 export default async function Profile() {
     const user = await getUser();

@@ -2,10 +2,16 @@ import HomeFooterComponent from '@/components/home-footer';
 import HomeMainComponent from '@/components/home-main';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/session';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
-export const metadata = { title: 'Welcome Create Next App' };
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('Welcome.Metadata');
+  return {
+    title: t('Title')
+  };
+};
 
 export default async function Welcome() {
   const t = await getTranslations('Welcome');
