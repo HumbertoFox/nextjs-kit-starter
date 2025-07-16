@@ -5,9 +5,10 @@ export const createAdminSchema = object({
         .min(1, 'ErrorsZod.NameRequired'),
     email: string()
         .email('ErrorsZod.EmailInvalid'),
-    role: z.enum(['ADMIN'], {
-        errorMap: () => ({ message: 'ErrorsZod.RoleRequiredAdmin' }),
-    }),
+    role: z.enum(['ADMIN'])
+        .refine((val) => val === 'ADMIN', {
+            message: 'ErrorsZod.RoleRequiredAdmin',
+        }),
     password: string()
         .min(8, 'ErrorsZod.PasswordMin'),
     password_confirmation: string()
@@ -30,9 +31,10 @@ export function getSignUpUpdateSchema(formData: FormData) {
         password_confirmation: isEdit
             ? string().optional()
             : string().min(1, 'ErrorsZod.PasswordConfirmRequired'),
-        role: z.enum(['USER', 'ADMIN'], {
-            errorMap: () => ({ message: 'ErrorsZod.RoleRequiredAdmin' })
-        })
+        role: z.enum(['ADMIN'])
+            .refine((val) => val === 'ADMIN', {
+                message: 'ErrorsZod.RoleRequiredAdmin',
+            })
     })
         .superRefine((data, ctx) => {
             if (data.password && data.password !== data.password_confirmation) {
@@ -46,19 +48,19 @@ export function getSignUpUpdateSchema(formData: FormData) {
 }
 
 export const signInSchema = object({
-    email: string({ required_error: "ErrorsZod.EmailRequired" })
-        .min(1, "ErrorsZod.EmailMin")
+    email: string()
+        .min(1, "ErrorsZod.EmailRequired")
         .email("ErrorsZod.EmailInvalid"),
-    password: string({ required_error: "ErrorsZod.PasswordRequired" })
-        .min(8, "ErrorsZod.PasswordMin")
+    password: string()
+        .min(8, "ErrorsZod.PasswordRequired")
         .max(32, "ErrorsZod.PasswordMax")
 })
 
 export const updateUserSchema = object({
     name: string()
         .min(1, 'ErrorsZod.NameRequired'),
-    email: string({ required_error: "ErrorsZod.EmailRequired" })
-        .min(1, "ErrorsZod.EmailMin")
+    email: string()
+        .min(1, "ErrorsZod.EmailRequired")
         .email("ErrorsZod.EmailInvalid")
 })
 
@@ -81,11 +83,11 @@ export const passwordUpdateSchema = object({
     });
 
 export const passwordResetSchema = object({
-    email: string({ required_error: "ErrorsZod.EmailRequired" })
-        .min(1, "ErrorsZod.EmailMin")
+    email: string()
+        .min(1, "ErrorsZod.EmailRequired")
         .email("ErrorsZod.EmailInvalid"),
-    token: string({ required_error: "ErrorsZod.TokenRequired" })
-        .min(1, "ErrorsZod.TokenMin"),
+    token: string()
+        .min(1, "ErrorsZod.TokenRequired"),
     password: string()
         .min(8, 'ErrorsZod.PasswordMin'),
     password_confirmation: string()
@@ -97,8 +99,8 @@ export const passwordResetSchema = object({
     });
 
 export const passwordForgotSchema = object({
-    email: string({ required_error: "ErrorsZod.EmailRequired" })
-        .min(1, "ErrorsZod.EmailMin")
+    email: string()
+        .min(1, "ErrorsZod.EmailRequired")
         .email("ErrorsZod.EmailInvalid"),
 });
 
