@@ -13,16 +13,16 @@ import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations('Admins.Metadata');
-  return {
-    title: t('Title')
-  };
+    const t = await getTranslations('Admins.Metadata');
+    return {
+        title: t('Title')
+    };
 };
 
 export default async function Admins() {
     const session = await getUser();
     const loggedAdmin = session?.id;
-    const admins = await prisma.user.findMany({ where: { role: 'ADMIN', deletedAt: null } });
+    const admins = await prisma.user.findMany({ where: { role: 'ADMIN', deletedAt: null }, select: { id: true, name: true, email: true } });
     const t = await getTranslations('Admins');
     return (
         <>
