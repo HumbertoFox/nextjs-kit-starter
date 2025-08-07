@@ -4,10 +4,6 @@ export const createAdminSchema = object({
     name: string()
         .min(1, 'ErrorsZod.NameRequired'),
     email: email('ErrorsZod.EmailInvalid'),
-    role: z.enum(['ADMIN'])
-        .refine((val) => val === 'ADMIN', {
-            message: 'ErrorsZod.RoleRequiredAdmin',
-        }),
     password: string()
         .min(8, 'ErrorsZod.PasswordMin'),
     password_confirmation: string()
@@ -104,7 +100,6 @@ export type FormStateCreateAdmin =
         errors?: {
             name?: string[];
             email?: string[];
-            role?: string[];
             password?: string[];
             password_confirmation?: string[];
         }

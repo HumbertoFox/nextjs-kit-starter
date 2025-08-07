@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { createAdmin } from '@/app/api/actions/createadmin';
 import { useTranslations } from 'next-intl';
 
@@ -16,7 +15,6 @@ type RegisterForm = {
     name: string;
     email: string;
     password: string;
-    role: string;
     password_confirmation: string;
 };
 
@@ -30,7 +28,6 @@ export default function RegisterAdmin() {
         name: '',
         email: '',
         password: '',
-        role: 'ADMIN',
         password_confirmation: '',
     });
 
@@ -52,7 +49,6 @@ export default function RegisterAdmin() {
                 name: '',
                 email: '',
                 password: '',
-                role: 'ADMIN',
                 password_confirmation: '',
             });
         };
@@ -148,33 +144,6 @@ export default function RegisterAdmin() {
                         </div>
                         {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
-
-                    <div className="grid gap-2">
-                        <Label htmlFor="role">{t('RoleLabel')}</Label>
-                        <Select
-                            required
-                            value={data.role}
-                            onValueChange={(value) => setData((prev) => ({ ...prev, role: value }))}
-                            disabled={pending}
-                        >
-                            <SelectTrigger
-                                id="role"
-                                name="role"
-                                title={t('RoleTitle')}
-                                tabIndex={5}
-                            >
-                                <SelectValue placeholder={t('RolePlaceholder')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="ADMIN">
-                                    {t('RoleItem')}
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                        {state?.errors?.role && <InputError message={t(state.errors.role[0])} />}
-                    </div>
-
-                    <input type="hidden" name="role" value={data.role} />
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
