@@ -22,7 +22,7 @@
     },
     "RegisterAdmin": {
         "Title": "Criar uma conta Administrador",
-        "Description": "Digite seu e-mail e senha abaixo para fazer login",
+        "Description": "Insira seus dados abaixo para criar sua conta",
         "NameLabel": "Nome",
         "NamePlaceholder": "Nome completo",
         "EmailLabel": "Endereço de email",

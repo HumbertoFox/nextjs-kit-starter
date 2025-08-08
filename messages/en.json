@@ -22,7 +22,7 @@
     },
     "RegisterAdmin": {
         "Title": "Create an account",
-        "Description": "Enter your email and password below to log in",
+        "Description": "Enter your details below to create your account",
         "NameLabel": "Name",
         "NamePlaceholder": "Full name",
         "EmailLabel": "Email address",
@@ -51,7 +51,7 @@
     },
     "Login": {
         "Title": "Log in to your account",
-        "Description": "Enter your details below to create your account",
+        "Description": "Enter your email and password below to log in",
         "EmailLabel": "Email address",
         "EmailPlaceholder": "email@example.com",
         "PasswordLabel": "Password",
