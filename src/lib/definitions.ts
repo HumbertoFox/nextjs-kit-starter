@@ -43,8 +43,7 @@ export function getSignUpUpdateSchema(formData: FormData) {
 }
 
 export const signInSchema = object({
-    email: email('ErrorsZod.EmailInvalid')
-        .min(1, 'ErrorsZod.EmailRequired'),
+    email: email('ErrorsZod.EmailInvalid'),
     password: string()
         .min(8, 'ErrorsZod.PasswordRequired')
         .max(32, 'ErrorsZod.PasswordMax')
@@ -54,7 +53,6 @@ export const updateUserSchema = object({
     name: string()
         .min(1, 'ErrorsZod.NameRequired'),
     email: email('ErrorsZod.EmailInvalid')
-        .min(1, 'ErrorsZod.EmailRequired')
 })
 
 export const deleteUserSchema = object({
@@ -76,8 +74,7 @@ export const passwordUpdateSchema = object({
     });
 
 export const passwordResetSchema = object({
-    email: email('ErrorsZod.EmailInvalid')
-        .min(1, 'ErrorsZod.EmailRequired'),
+    email: email('ErrorsZod.EmailInvalid'),
     token: string()
         .min(1, 'ErrorsZod.TokenRequired'),
     password: string()
@@ -92,7 +89,6 @@ export const passwordResetSchema = object({
 
 export const passwordForgotSchema = object({
     email: email('ErrorsZod.EmailInvalid')
-        .min(1, "ErrorsZod.EmailRequired")
 });
 
 export type FormStateCreateAdmin =

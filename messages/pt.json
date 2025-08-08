@@ -62,8 +62,6 @@
         "WarningOne": "E-mail ou senha inválidos",
         "WarningTwo": "Ocorreu um erro desconhecido",
         "ErrorsZod": {
-            "EmailRequired": "E-mail é obrigatório",
-            "EmailMin": "E-mail é obrigatório",
             "EmailInvalid": "E-mail inválido",
             "PasswordRequired": "Senha é necessária",
             "PasswordMin": "A senha deve ter mais de 8 caracteres",
@@ -88,8 +86,6 @@
         "LinkLogin": "Conecte-se",
         "Message": "Se seu e-mail estiver registrado, você receberá um link para redefinir sua senha.",
         "ErrorsZod": {
-            "EmailRequired": "E-mail é obrigatório",
-            "EmailMin": "E-mail é obrigatório",
             "EmailInvalid": "E-mail inválido"
         }
     },
@@ -105,8 +101,6 @@
         "Warning": "Token inválido ou expirado.",
         "Message": "Senha redefinida com sucesso!",
         "ErrorsZod": {
-            "EmailRequired": "E-mail é obrigatório",
-            "EmailMin": "E-mail é obrigatório",
             "EmailInvalid": "E-mail inválido",
             "TokenRequired": "Token é necessário",
             "TokenMin": "Token é necessário",
@@ -264,8 +258,6 @@
         "Saved": "Salvo",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
-            "EmailRequired": "E-mail é obrigatório",
-            "EmailMin": "E-mail é obrigatório",
             "EmailInvalid": "E-mail inválido",
             "EmailAlreadyUse": "Este e-mail já está em uso"
         }

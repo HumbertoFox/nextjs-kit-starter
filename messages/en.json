@@ -62,8 +62,6 @@
         "WarningOne": "Invalid email or password",
         "WarningTwo": "Unknown error occurred",
         "ErrorsZod": {
-            "EmailRequired": "Email is required",
-            "EmailMin": "Email is required",
             "EmailInvalid": "Invalid email",
             "PasswordRequired": "Password is required",
             "PasswordMin": "Password must be more than 8 characters",
@@ -88,8 +86,6 @@
         "LinkLogin": "log in",
         "Message": "If your email is registered, you will receive a link to reset your password.",
         "ErrorsZod": {
-            "EmailRequired": "Email is required",
-            "EmailMin": "Email is required",
             "EmailInvalid": "Invalid email"
         }
     },
@@ -264,8 +260,6 @@
         "Saved": "Saved",
         "ErrorsZod": {
             "NameRequired": "Name is required",
-            "EmailRequired": "Email is required",
-            "EmailMin": "Email is required",
             "EmailInvalid": "Invalid email",
             "EmailAlreadyUse": "This email is already in use"
         }
