@@ -216,7 +216,7 @@
             "EmailAlreadyUse": "This email is already in use",
             "PasswordMin": "Password must be at least 8 characters long",
             "PasswordConfirmRequired": "Please confirm your password",
-            "RoleRequiredAdmin": "Role must be either USER or ADMINISTRATOR",
+            "RoleRequiredAdminUser": "Role must be either USER or ADMINISTRATOR",
             "PasswordMatch": "Passwords don't match"
         }
     },

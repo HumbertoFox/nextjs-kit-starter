@@ -214,7 +214,7 @@
             "EmailAlreadyUse": "Este e-mail já está em uso",
             "PasswordMin": "A senha deve ter pelo menos 8 caracteres",
             "PasswordConfirmRequired": "Por favor confirme sua senha",
-            "RoleRequiredAdmin": "A função deve ser USUÁRIO ou ADMINISTRADOR(A)",
+            "RoleRequiredAdminUser": "A função deve ser USUÁRIO ou ADMINISTRADOR(A)",
             "PasswordMatch": "As senhas não correspondem"
         }
     },

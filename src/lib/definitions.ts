@@ -26,10 +26,9 @@ export function getSignUpUpdateSchema(formData: FormData) {
         password_confirmation: isEdit
             ? string().optional()
             : string().min(1, 'ErrorsZod.PasswordConfirmRequired'),
-        role: z.enum(['ADMIN'])
-            .refine((val) => val === 'ADMIN', {
-                message: 'ErrorsZod.RoleRequiredAdmin',
-            })
+        role: z.enum(['ADMIN', 'USER'], {
+            error: 'ErrorsZod.RoleRequiredAdminUser'
+        })
     })
         .superRefine((data, ctx) => {
             if (data.password && data.password !== data.password_confirmation) {
