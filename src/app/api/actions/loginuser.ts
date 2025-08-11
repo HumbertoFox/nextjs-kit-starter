@@ -24,7 +24,7 @@ export async function loginUser(state: FormStateLoginUser, formData: FormData): 
 
         if (!isPasswordValid) return { warning: 'WarningOne' };
 
-        await createSession(user.id);
+        await createSession(user.id, user.role);
 
         return { message: 'Message' };
     } catch (error) {

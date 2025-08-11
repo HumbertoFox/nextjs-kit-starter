@@ -19,11 +19,11 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(userId: string): Promise<void> {
+export async function createSession(userId: string, role: string): Promise<void> {
     const expTimestamp = Math.floor(Date.now() / 1000) + 15 * 60;
     const expDate = new Date(expTimestamp * 1000);
 
-    const session = await new SignJWT({ userId })
+    const session = await new SignJWT({ userId, role })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
         .setExpirationTime(expTimestamp)
@@ -65,7 +65,7 @@ export async function updateSession() {
     const timeLeft = payload.exp - now;
 
     if (timeLeft < 5 * 60) {
-        const newExp = now + 5 * 60;
+        const newExp = now + 15 * 60;
         const newExpDate = new Date(newExp * 1000);
 
         const newToken = await new SignJWT({ userId: payload.userId })
@@ -82,5 +82,5 @@ export async function updateSession() {
             path: '/'
         });
     }
-    return { userId: payload.userId };
+    return { userId: payload.userId, role: payload.role };
 }

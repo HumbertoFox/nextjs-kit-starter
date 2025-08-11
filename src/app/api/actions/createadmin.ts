@@ -18,11 +18,11 @@ export async function createAdmin(state: FormStateCreateAdmin, formData: FormDat
     const { name, email, password } = validatedFields.data;
 
     try {
-        const hashedPassword = password ? await bcrypt.hash(password, 12) : undefined;
+        const hashedPassword = await bcrypt.hash(password, 12);
 
-        const user = await prisma.user.create({ data: { name, email, role: 'ADMIN', password: hashedPassword! } });
+        const user = await prisma.user.create({ data: { name, email, role: 'ADMIN', password: hashedPassword } });
 
-        await createSession(user.id);
+        await createSession(user.id, user.role);
 
         return { message: true };
     } catch (error) {
