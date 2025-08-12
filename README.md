@@ -593,6 +593,44 @@ import { updateSession } from './lib/session';
 
 ---
 
+# 🚧 Middleware Logic
+The middleware function restricts access to protected routes like `/dashboard` and ensures only `ADMIN` users can access `/dashboard/admins`.
+
+```ts
+
+const protectedRoutes = ['/dashboard'];
+const publicRoutes = ['/login', '/'];
+
+export default async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+  const isProtectedRoute = protectedRoutes.includes(path);
+  const isPublicRoute = publicRoutes.includes(path);
+
+  const session = await updateSession();
+
+  // 🔒 Redirect unauthenticated users from protected routes
+  if (isProtectedRoute && !session?.userId) {
+    return NextResponse.redirect(new URL('/login', req.nextUrl));
+  }
+
+  // 🔁 Redirect authenticated users away from public routes
+  if (isPublicRoute && session?.userId && !path.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+  }
+
+  // 🛑 Only allow ADMIN users to access /dashboard/admins
+  if (path.startsWith('/dashboard/admins') && session?.role !== 'ADMIN') {
+    return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+  }
+
+  return NextResponse.next();
+}
+
+
+```
+
+---
+
 # 🔄 middleware(req: NextRequest)
 
 - Redirects unauthenticated users away from protected routes
@@ -607,9 +645,8 @@ export default async function middleware(req: NextRequest) { ... }
 
 ---
 
-# 🎯 matcher Configuration
-
-Only runs the middleware on relevant paths (excludes APIs and static assets):
+# 🎯 Matcher Configuration
+This config ensures the middleware only runs on relevant routes, skipping static assets and API endpoints:
 
 ```ts
 
