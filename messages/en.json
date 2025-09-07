@@ -31,10 +31,6 @@
         "PasswordPlaceholder": "Password",
         "ConfirmPasswordLabel": "Confirm password",
         "ConfirmPasswordPlaceholder": "Confirm password",
-        "RoleLabel": "Account Type",
-        "RoleTitle": "Select Account Type",
-        "RolePlaceholder": "Account Type",
-        "RoleItem": "Administrator",
         "Submit": "Create account",
         "Warning": "Something went wrong. Please try again later.",
         "ErrorsZod": {
@@ -101,11 +97,8 @@
         "Warning": "Invalid or expired token.",
         "Message": "Password reset successfully!",
         "ErrorsZod": {
-            "EmailRequired": "Email is required",
-            "EmailMin": "Email is required",
             "EmailInvalid": "Invalid email",
             "TokenRequired": "Token is required",
-            "TokenMin": "Token is required",
             "PasswordMin": "Password must be more than 8 characters",
             "PasswordConfirmRequired": "Please confirm your password",
             "PasswordMatch": "Passwords don't match"

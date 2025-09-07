@@ -31,10 +31,6 @@
         "PasswordPlaceholder": "Senha",
         "ConfirmPasswordLabel": "Confirme sua senha",
         "ConfirmPasswordPlaceholder": "Confirme sua senha",
-        "RoleLabel": "Tipo de conta",
-        "RoleTitle": "Selecione o tipo de conta",
-        "RolePlaceholder": "Tipo de conta",
-        "RoleItem": "Administrador(a)",
         "Submit": "Criar uma conta",
         "Warning": "Algo deu errado. Tente novamente mais tarde.",
         "ErrorsZod": {
@@ -103,7 +99,6 @@
         "ErrorsZod": {
             "EmailInvalid": "E-mail inválido",
             "TokenRequired": "Token é necessário",
-            "TokenMin": "Token é necessário",
             "PasswordMin": "A senha deve ter mais de 8 caracteres",
             "PasswordConfirmRequired": "Por favor confirme sua senha",
             "PasswordMatch": "As senhas não correspondem"
