@@ -1,6 +1,6 @@
 'use server';
 
-import { FormStateCreateUpdateAdminUser, getSignUpUpdateSchema, } from '@/lib/definitions';
+import { FormStateCreateUpdateAdminUser, getSignUpUpdateSchema } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 import * as bcrypt from 'bcrypt-ts';
 
@@ -28,6 +28,10 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
             const userInDb = await prisma.user.findUnique({ where: { id } });
 
             if (!userInDb || userInDb.deletedAt) return { message: false };
+
+            const existingUser = await prisma.user.findUnique({ where: { email } });
+
+            if (existingUser && existingUser.id !== id) return { errors: { email: ['ErrorsZod.EmailAlreadyUse'] } };
 
             const hasChanges =
                 userInDb.name !== name ||
