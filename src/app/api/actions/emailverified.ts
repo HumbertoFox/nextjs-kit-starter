@@ -11,9 +11,17 @@ export async function emailVerifiedChecked() {
     if (!sessionUser?.email) return null;
 
     const email = sessionUser.email;
-    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
+    const tokenExisting = await prisma.verificationToken.findFirst({
+        where: {
+            identifier: email
+        }
+    });
 
-    const isCheckedEmail = await prisma.user.findUnique({ where: { email } });
+    const isCheckedEmail = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    });
 
     if (isCheckedEmail?.emailVerified) return null;
 

@@ -16,14 +16,29 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
 
     if (!email && !token) return { error: 'ErrorOne' };
 
-    const isCheckedEmail = await prisma.user.findUnique({ where: { email } });
+    const isCheckedEmail = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    });
 
     if (isCheckedEmail?.emailVerified) return { error: 'ErrorTow' };
 
-    const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
+    const tokenExisting = await prisma.verificationToken.findFirst({
+        where: {
+            identifier: email
+        }
+    });
 
     if (tokenExisting && new Date() > tokenExisting.expires) {
-        await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token: tokenExisting.token } } });
+        await prisma.verificationToken.delete({
+            where: {
+                identifier_token: {
+                    identifier: email,
+                    token: tokenExisting.token
+                }
+            }
+        });
 
         const token = crypto.randomBytes(32).toString('hex');
 
@@ -37,9 +52,22 @@ export async function handleEmailVerification(state: FormStateEmailVerification 
         return { status: 'verification-link-sent' };
     }
 
-    await prisma.user.update({ where: { email }, data: { emailVerified: new Date() } });
+    await prisma.user.update({
+        where: {
+            email
+        },
+        data: {
+            emailVerified: new Date()
+        }
+    });
 
-    await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
+    await prisma.verificationToken.delete({
+        where: {
+            identifier_token: {
+                identifier: email, token
+            }
+        }
+    });
 
     return { success: 'Success' };
 }

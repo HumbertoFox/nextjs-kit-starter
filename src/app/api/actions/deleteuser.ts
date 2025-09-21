@@ -15,14 +15,25 @@ export async function deleteUser(state: FormStateUserDelete, formData: FormData)
 
     if (!sessionUser?.id) return { message: false };
 
-    const existingUser = await prisma.user.findUnique({ where: { id: sessionUser.id } });
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            id: sessionUser.id
+        }
+    });
 
     if (!existingUser) return { message: false };
 
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
     if (!isPasswordCorrect) return { errors: { password: ['ErrorsZod.PasswordCurrentIncorrect'] } };
 
-    await prisma.user.update({ where: { id: sessionUser.id }, data: { deletedAt: new Date() } });
+    await prisma.user.update({
+        where: {
+            id: sessionUser.id
+        },
+        data: {
+            deletedAt: new Date()
+        }
+    });
 
     return { message: true };
 }

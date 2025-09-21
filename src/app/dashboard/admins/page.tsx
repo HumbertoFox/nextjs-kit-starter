@@ -22,7 +22,15 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default async function Admins() {
     const session = await getUser();
     const loggedAdmin = session?.id;
-    const admins = await prisma.user.findMany({ where: { role: 'ADMIN', deletedAt: null }, select: { id: true, name: true, email: true } });
+    const admins = await prisma.user.findMany({
+        where: {
+            role: 'ADMIN',
+            deletedAt: null
+        },
+        select: {
+            id: true, name: true, email: true
+        }
+    });
     const t = await getTranslations('Admins');
     return (
         <>
