@@ -110,7 +110,7 @@ export default function RegisterAdmin() {
                             />
                             <button
                                 type="button"
-                                className='absolute right-2 top-[6px] opacity-30 hover:opacity-100 duration-300 cursor-pointer'
+                                className="btn-icon-toggle"
                                 onClick={toggleShowPassword}
                             >
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
@@ -136,7 +136,7 @@ export default function RegisterAdmin() {
                             />
                             <button
                                 type="button"
-                                className='absolute right-2 top-[6px] opacity-30 hover:opacity-100 duration-300 cursor-pointer'
+                                className="btn-icon-toggle"
                                 onClick={toggleShowPasswordConfirm}
                             >
                                 {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}

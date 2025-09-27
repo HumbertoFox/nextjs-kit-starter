@@ -610,7 +610,7 @@ export default async function middleware(req: NextRequest) {
 
   // 🔒 Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl));
+    return NextResponse.redirect(new URL(`/login?redirect=${encodeURIComponent(path)}`, req.nextUrl));
   }
 
   // 🔁 Redirect authenticated users away from public routes
@@ -619,7 +619,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // 🛑 Only allow ADMIN users to access /dashboard/admins
-  if (path.startsWith('/dashboard/admins') && session?.role !== 'ADMIN') {
+  if (isAdminRoute && session?.role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
 
