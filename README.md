@@ -598,13 +598,12 @@ The middleware function restricts access to protected routes like `/dashboard` a
 
 ```ts
 
-const protectedRoutes = ['/dashboard'];
-const publicRoutes = ['/login', '/'];
-
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+
+  const isProtectedRoute = path.startsWith('/dashboard');
+  const isAdminRoute = path.startsWith('/dashboard/admins');
+  const isPublicRoute = ['/login', '/'].includes(path);
 
   const session = await updateSession();
 
