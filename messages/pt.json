@@ -96,6 +96,10 @@
         "Submit": "Redefinir senha",
         "Warning": "Token inválido ou expirado.",
         "Message": "Senha redefinida com sucesso!",
+        "SubjectPassword": "Redefinição de senha",
+        "ParagrafPasswordOne": "Você solicitou uma redefinição de senha.",
+        "ParagrafPasswordTwo": "Clique no link abaixo para criar uma nova senha:",
+        "ParagrafPasswordThree": "Se você não solicitou isso, ignore este e-mail.",
         "ErrorsZod": {
             "EmailInvalid": "E-mail inválido",
             "TokenRequired": "Token é necessário",
