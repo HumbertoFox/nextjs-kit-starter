@@ -123,7 +123,11 @@
         "LinkLogin": "Conecte-se",
         "ErrorOne": "Não autenticado",
         "ErrorTow": "e-mail já verificado!",
-        "Success": "Por favor, verifique seu e-mail."
+        "Success": "E-mail, verificado!",
+        "SubjectEmail": "Verifique seu e-mail",
+        "TextH2EmailOne": "Confirmação por e-mail",
+        "ParagrafEmailOne": "Clique no link abaixo para confirmar seu e-mail:",
+        "ParagrafEmailTwo": "Se você não solicitou isso, pode ignorar este e-mail."
     },
     "AppSidebar": {
         "Dashboard": "Painel",
