@@ -16,7 +16,8 @@
 </div>
 
 ## 👤 Admin Registration Page (Next.js + Prisma)
-This project includes a protected admin registration page. The form is only accessible if no admin user exists yet in the database. It’s built with Next.js App Router, Prisma, bcrypt-ts, React Hooks, and Zod validation.
+This project includes a protected admin registration page. The form is only accessible if no admin user exists yet in the database.
+It’s built with Next.js App Router, Prisma, bcrypt-ts, React Hooks,, shadcn-ui and Zod validation.
 
 ## 📁 File Structure
 

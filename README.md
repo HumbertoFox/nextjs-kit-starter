@@ -16,7 +16,8 @@
 </div>
 
 ## 👤 Página de Registro de Administrador (Next.js + Prisma)
-Este projeto inclui uma página de registro de administrador protegida. O formulário só é acessível se ainda não houver um usuário administrador no banco de dados. Ele foi criado com Next.js App Router, Prisma, bcrypt-ts, React Hooks e validação Zod.
+Este projeto inclui uma página de registro de administrador protegida. O formulário só é acessível se ainda não houver um usuário administrador no banco de dados.
+Ele foi criado com Next.js App Router, Prisma, bcrypt-ts, React Hooks, shadcn-ui e validação Zod.
 
 ## 📁 Estrutura de Arquivos
 
@@ -24,22 +25,22 @@ Este projeto inclui uma página de registro de administrador protegida. O formul
 
 /app
   /register
-    └── page.tsx                # Redirects if admin exists
-    └── form-register-admin.tsx # Client-side admin registration form
+    └── page.tsx                # Redireciona se o administrador existir
+    └── form-register-admin.tsx # Formulário de registro de administrador do lado do cliente
 
 /app/api/actions
-  └── createadmin.ts           # Server-side logic for admin creation
+  └── createadmin.ts           # Lógica do lado do servidor para criação de administrador
 
 /lib
-  └── prisma.ts                # Prisma client
-  └── session.ts               # Session management
-  └── definitions.ts           # Zod schema definitions
+  └── prisma.ts                # Cliente Prisma
+  └── session.ts               # Gerenciamento de sessão
+  └── definitions.ts           # Definições do esquema Zod
 
 ```
 
 ---
 
-## 🚦 Lógica de redirecionamento (page.tsx)
+## 🚦 Lógica de redirecionamento (`page.tsx`)
 
 ```tsx
 
