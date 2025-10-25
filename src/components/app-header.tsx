@@ -32,7 +32,7 @@ export function AppHeader({ user }: { user: User }) {
     const handleLinkClick = (href: string) => {
         if (pathname !== href) {
             setIsOpen(false);
-        }
+        };
     };
     const mainNavItems: NavItem[] = [
         { title: t('Dashboard'), href: '/dashboard', icon: LayoutGrid },
@@ -69,7 +69,7 @@ export function AppHeader({ user }: { user: User }) {
                                     <div className="flex h-full flex-col justify-between text-sm">
                                         <div className="flex flex-col space-y-4">
                                             {navItems.map((item) => (
-                                                <Link key={item.title} href={item.href} onClick={() => handleLinkClick(item.href)} className="flex items-center space-x-2 font-medium">
+                                                <Link key={item.title} href={item.href} prefetch onClick={() => handleLinkClick(item.href)} className="flex items-center space-x-2 font-medium">
                                                     {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
                                                     <span>{item.title}</span>
                                                 </Link>
