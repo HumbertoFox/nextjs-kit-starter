@@ -26,8 +26,9 @@ export default function UpdateUserBreadcrumb({ user }: { user: User }) {
                     : [...base, updateCrumb];
 
             setBreadcrumbs(crumbs);
+        } else {
+            router.back();
         };
-        router.back();
     }, [setBreadcrumbs, user, tb]);
 
     return null;
