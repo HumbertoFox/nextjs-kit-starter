@@ -23,6 +23,12 @@
     "RegisterAdmin": {
         "Title": "Create an account",
         "Description": "Enter your details below to create your account",
+        "ProfilePictureLabel": "Profile picture (optional)",
+        "ImageAlt": "Preview image Profile",
+        "NoImage": "No image",
+        "ImageLabel": "Select image",
+        "TitleSelectImageError": "Click on Select image and then Cancel.",
+        "TitleSelectImage": "Select profile picture",
         "NameLabel": "Name",
         "NamePlaceholder": "Full name",
         "EmailLabel": "Email address",
@@ -35,6 +41,11 @@
         "ShowPassword": "Show password",
         "Submit": "Create account",
         "Warning": "Something went wrong. Please try again later.",
+        "RegisterSuccess": "Account created successfully! Redirecting to the Dashboard, please wait...",
+        "TypeImage": "Only JPEG, PNG, or WebP formats are allowed.",
+        "SizeImage": "The image cannot exceed 512 KB.",
+        "DimensionImage": "The image cannot exceed 512x512px (current: {width}x{height})",
+        "UplodeImageError": "Failed to read the image.",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email address",
@@ -195,6 +206,12 @@
         }
     },
     "RegisterUserForm": {
+        "ProfilePictureLabel": "Profile picture (optional)",
+        "ImageAlt": "Preview image Profile",
+        "NoImage": "No image",
+        "ImageLabel": "Select image",
+        "TitleSelectImageError": "Click on Select image and then Cancel.",
+        "TitleSelectImage": "Select profile picture",
         "IdLabel": "ID",
         "IdPlaceholder": "ID",
         "NameLabel": "Name",
@@ -212,6 +229,10 @@
         "RolePlaceholder": "Account Type",
         "RoleItemUser": "User",
         "RoleItemAdmin": "Administrator",
+        "TypeImage": "Only JPEG, PNG, or WebP formats are allowed.",
+        "SizeImage": "The image cannot exceed 512 KB.",
+        "DimensionImage": "The image cannot exceed 512x512px (current: {width}x{height})",
+        "UplodeImageError": "Failed to read the image.",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email address",

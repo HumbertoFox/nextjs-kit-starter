@@ -23,6 +23,12 @@
     "RegisterAdmin": {
         "Title": "Criar uma conta Administrador",
         "Description": "Insira seus dados abaixo para criar sua conta",
+        "ProfilePictureLabel": "Foto de perfil (opcional)",
+        "ImageAlt": "Pré-visualização da imagem de perfil",
+        "NoImage": "Sem imagem",
+        "ImageLabel": "Selecionar imagem",
+        "TitleSelectImageError": "Click em Selecionar imagem e em Cancelar",
+        "TitleSelectImage": "Selecionar imagem de perfil",
         "NameLabel": "Nome",
         "NamePlaceholder": "Nome completo",
         "EmailLabel": "Endereço de email",
@@ -35,6 +41,11 @@
         "ShowPassword": "Mostrar senha",
         "Submit": "Criar uma conta",
         "Warning": "Algo deu errado. Tente novamente mais tarde.",
+        "RegisterSuccess": "Conta criada com Sucesso! Redirecionando para o Painel, aguarde...",
+        "TypeImage": "Apenas JPEG, PNG ou WebP são permitidas.",
+        "SizeImage": "A imagem não pode ultrapassar 512 KB.",
+        "DimensionImage": "A imagem não pode exceder 512x512px (atual: {width}x{height})",
+        "UplodeImageError": "Falha ao ler a imagem.",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
             "EmailInvalid": "Endereço de e-mail inválido",
@@ -195,6 +206,12 @@
         }
     },
     "RegisterUserForm": {
+        "ProfilePictureLabel": "Foto de perfil (opcional)",
+        "ImageAlt": "Pré-visualização da imagem de perfil",
+        "NoImage": "Sem imagem",
+        "ImageLabel": "Selecionar imagem",
+        "TitleSelectImageError": "Click em Selecionar imagem e em Cancelar",
+        "TitleSelectImage": "Selecionar imagem de perfil",
         "IdLabel": "Cód.",
         "IdPlaceholder": "Cód.",
         "NameLabel": "Nome",
@@ -212,6 +229,10 @@
         "RolePlaceholder": "Tipo de conta",
         "RoleItemUser": "usuário",
         "RoleItemAdmin": "Administrador",
+        "TypeImage": "Apenas JPEG, PNG ou WebP são permitidas.",
+        "SizeImage": "A imagem não pode ultrapassar 512 KB.",
+        "DimensionImage": "A imagem não pode exceder 512x512px (atual: {width}x{height})",
+        "UplodeImageError": "Falha ao ler a imagem.",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
             "EmailInvalid": "Endereço de e-mail inválido",

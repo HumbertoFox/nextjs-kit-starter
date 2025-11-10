@@ -150,7 +150,8 @@ export default async function Users(props: { searchParams?: Promise<{ page?: num
                     </Table>
                 </div>
             </div>
-            <Pagination className="pb-2.5">
+            {totalPages > 1 && (
+                <Pagination className="pb-2.5">
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious
@@ -188,6 +189,7 @@ export default async function Users(props: { searchParams?: Promise<{ page?: num
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
+            )}
         </>
     );
 }

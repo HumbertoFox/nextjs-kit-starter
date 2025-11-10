@@ -10,18 +10,25 @@ import AuthLayout from '@/components/layouts/auth-layout';
 import { Icon } from '@/components/ui/icon';
 import { createAdmin } from '@/app/api/actions/createadmin';
 import { useTranslations } from 'next-intl';
+import { handleImageChange } from '@/lib/handleimagechange';
+import Image from 'next/image';
 
 type RegisterForm = {
     name: string;
     email: string;
     password: string;
     password_confirmation: string;
+    image?: File;
 };
 
 export default function RegisterAdmin() {
     const t = useTranslations('RegisterAdmin');
     const emailRef = useRef<HTMLInputElement>(null);
     const [state, action, pending] = useActionState(createAdmin, undefined);
+    const [imageMeta, setImageMeta] = useState<{ width?: number; height?: number } | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageError, setImageError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false);
     const [data, setData] = useState<RegisterForm>({
@@ -29,17 +36,27 @@ export default function RegisterAdmin() {
         email: '',
         password: '',
         password_confirmation: '',
+        image: undefined,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
+    const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { file, preview, error, meta } = await handleImageChange(e);
+        setImageFile(file);
+        setImagePreview(preview);
+        setImageError(error);
+        setImageMeta(meta || null);
+    };
     const toggleShowPassword = () => setShowPassword(prev => !prev);
     const toggleShowPasswordConfirm = () => setShowPasswordConfirm(prev => !prev);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (imageError) return;
         const formData = new FormData(e.currentTarget);
+        if (imageFile) formData.append('file', imageFile);
         startTransition(() => action(formData));
     };
 
@@ -50,13 +67,83 @@ export default function RegisterAdmin() {
                 email: '',
                 password: '',
                 password_confirmation: '',
+                image: undefined,
             });
         };
     }, [state]);
     return (
-        <AuthLayout title={t('Title')} description={t('Description')}>
-            <form className="flex flex-col gap-6" onSubmit={submit}>
+        <AuthLayout
+            title={t('Title')}
+            description={t('Description')}
+        >
+            <form
+                onSubmit={submit}
+                className="flex flex-col gap-6"
+            >
                 <div className="grid gap-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="file">{t('ProfilePictureLabel')}</Label>
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="relative w-24 h-24 rounded-full overflow-hidden border border-gray-300">
+                                {imagePreview ? (
+                                    <Image
+                                        src={imagePreview}
+                                        alt={t('ImageAlt')}
+                                        width={512}
+                                        height={512}
+                                        className="object-cover w-full h-full"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-sm text-gray-400 bg-gray-50">
+                                        {t('NoImage')}
+                                    </div>
+                                )}
+                            </div>
+
+                            <Label
+                                htmlFor="file"
+                                title={imageError ? t('TitleSelectImageError') : t('TitleSelectImage')}
+                                className="cursor-pointer px-3 py-1 text-sm border rounded-md hover:bg-gray-50"
+                            >
+                                {t('ImageLabel')}
+                            </Label>
+                            <Input
+                                id="file"
+                                name="file"
+                                type="file"
+                                tabIndex={1}
+                                accept="image/jpeg, image/png, image/webp"
+                                onChange={onImageChange}
+                                disabled={pending}
+                                className="hidden"
+                            />
+                            {imageError && (
+                                <InputError
+                                    message={
+                                        imageError === 'DimensionImage'
+                                            ? t(imageError, {
+                                                width: imageMeta?.width ?? 0,
+                                                height: imageMeta?.height ?? 0,
+                                            })
+                                            : t(imageError)
+                                    }
+                                />
+                            )}
+                            {state?.errors?.image?.[0] && (
+                                <InputError
+                                    message={
+                                        state.errors.image[0] === 'DimensionImage'
+                                            ? t(state.errors.image[0], {
+                                                width: state.meta?.width ?? 0,
+                                                height: state.meta?.height ?? 0,
+                                            })
+                                            : t(state.errors.image[0])
+                                    }
+                                />
+                            )}
+                        </div>
+                    </div>
+
                     <div className="grid gap-2">
                         <Label htmlFor="name">{t('NameLabel')}</Label>
                         <Input
@@ -65,7 +152,7 @@ export default function RegisterAdmin() {
                             type="text"
                             required
                             autoFocus
-                            tabIndex={1}
+                            tabIndex={2}
                             autoComplete="name"
                             value={data.name}
                             onChange={handleChange}
@@ -83,7 +170,7 @@ export default function RegisterAdmin() {
                             type="email"
                             ref={emailRef}
                             required
-                            tabIndex={2}
+                            tabIndex={3}
                             autoComplete="email"
                             value={data.email}
                             onChange={handleChange}
@@ -101,7 +188,7 @@ export default function RegisterAdmin() {
                                 name="password"
                                 type={showPassword ? "text" : "password"}
                                 required
-                                tabIndex={3}
+                                tabIndex={4}
                                 autoComplete="new-password"
                                 value={data.password}
                                 onChange={handleChange}
@@ -128,7 +215,7 @@ export default function RegisterAdmin() {
                                 name="password_confirmation"
                                 type={showPasswordConfirm ? "text" : "password"}
                                 required
-                                tabIndex={4}
+                                tabIndex={5}
                                 autoComplete="new-password"
                                 value={data.password_confirmation}
                                 onChange={handleChange}
@@ -147,7 +234,13 @@ export default function RegisterAdmin() {
                         {state?.errors?.password_confirmation?.[0] && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>
+                    <Button
+                        type="submit"
+                        className="mt-2 w-full"
+                        tabIndex={6}
+                        disabled={pending || Boolean(imageError)}
+                        aria-busy={pending || Boolean(imageError)}
+                    >
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         {t('Submit')}
                     </Button>
@@ -155,6 +248,7 @@ export default function RegisterAdmin() {
             </form>
 
             {state?.warning && <div className="mb-4 text-center text-sm font-medium text-orange-400">{t(state.warning)}</div>}
+            {state?.message && <div className="mb-4 text-center text-sm font-medium text-blue-400">{t('RegisterSuccess')}</div>}
         </AuthLayout>
     );
 }
