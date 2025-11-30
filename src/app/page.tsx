@@ -15,14 +15,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function Welcome() {
   const t = await getTranslations('Welcome');
-  const isUserAdmin = await prisma.user.findMany({
+  const session = await getSession();
+  const isUserAdmin = await prisma.user.count({
     where: {
       role: 'ADMIN'
     }
   });
-  const session = await getSession();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 font-family-name:var(--font-geist-sans)">
       <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-[1440px]">
         <nav className="flex items-center justify-end gap-4">
           {session ? (
@@ -33,7 +33,7 @@ export default async function Welcome() {
               {t('Dashboard')}
             </Link>
           ) : (
-            isUserAdmin.length > 0 ? (
+            isUserAdmin > 0 ? (
               <Link
                 href="/login"
                 className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
