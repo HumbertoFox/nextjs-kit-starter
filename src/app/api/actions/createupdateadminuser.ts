@@ -132,7 +132,7 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
                 }
             });
 
-            revalidatePath(newUser.role);
+            revalidatePaths(newUser.role);
 
             return { message: true };
         }
